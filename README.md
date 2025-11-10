@@ -6,6 +6,20 @@ A lightweight C SDK for game traffic tunneling and network acceleration with rea
 
 Lingti SDK is a high-performance network tunneling library designed for game traffic optimization. It provides a simple C API for integrating network acceleration capabilities into games and applications, featuring real-time traffic monitoring, intelligent routing, and cross-platform support.
 
+## Installation
+
+### Download Required Files
+
+The SDK is open source and available at: **https://github.com/ruilisi/lingti-sdk**
+
+**Pre-compiled DLL/lib files for each SDK version are available in the [GitHub Releases](https://github.com/ruilisi/lingti-sdk/releases) section.**
+
+Each release includes:
+- `lingti_sdk.dll` - Main SDK library
+- `lingti_sdk.lib` - Import library for linking
+
+**Note:** The `lingtiwfp64.sys` Windows driver file is included in the repository (not in releases, as it rarely changes). This file **must be placed in the same directory as your compiled executable** for the SDK to function properly on Windows.
+
 ## Features
 
 - **Simple C API** - Clean interface with start/stop service management
