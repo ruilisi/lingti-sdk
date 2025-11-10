@@ -143,27 +143,49 @@ Related APIs will be provided once requested [here](https://xiemala.com/f/rY1aZz
 
 ## Building
 
-### Windows (MinGW)
+### Using the Makefile (Recommended)
+
+Build the example with all required files:
+```bash
+make example
+```
+
+This will create an `example/` directory containing:
+- `example.exe` - Compiled executable
+- `lingtiwfp64.sys` - Windows driver file
+- `lingti_sdk.dll` - SDK library
+
+Clean the build:
+```bash
+make clean
+```
+
+The Makefile automatically detects your platform:
+- **Windows**: Uses native gcc or MinGW
+- **Linux/macOS**: Uses MinGW cross-compiler (install with `brew install mingw-w64`)
+
+### Manual Compilation
+
+#### Windows (MinGW)
 ```bash
 gcc your_app.c -L. -llingti_sdk -o your_app.exe
 ```
 
-### Windows (MSVC)
+#### Windows (MSVC)
 ```bash
 cl your_app.c lingti_sdk.lib
 ```
 
-### Linux/macOS
+#### Linux/macOS (Cross-compile)
 ```bash
-gcc your_app.c -L. -llingti_sdk -o your_app
+x86_64-w64-mingw32-gcc your_app.c lingti_sdk.lib -o your_app.exe
 ```
 
 ## Examples
 
 See the `examples/` directory for complete working examples:
 - `sdk_example.c` - Basic SDK usage demonstration
-- `build_example.sh` - Linux/macOS build script
-- `build_example.bat` - Windows build script
+- `sdk_example_min.c` - Minimal 5-line example
 
 ## License
 

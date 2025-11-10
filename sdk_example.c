@@ -10,7 +10,7 @@
  */
 
 #include <stdio.h>
-#include "../lingti_sdk.h"
+#include "lingti_sdk.h"
 
 #ifdef _WIN32
 #include <windows.h>
@@ -31,7 +31,7 @@ int main() {
 
     // Path to encrypted config file
     // For encryption details, see API.md
-    const char* configFile = "encrypted_config.txt";
+    const char* configFile = "encrypted_token.txt";
 
     printf("Starting service from config file...\n");
     int result = StartTun2RWithConfigFile(configFile);
