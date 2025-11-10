@@ -1,6 +1,11 @@
 # Lingti SDK
+<div>
+<img width="128" height="128" alt="image" src="https://github.com/user-attachments/assets/a83686c0-96f8-4b38-91e9-669f9f826461" style="text-align: center;" />
+</div>
 
-A lightweight C SDK for game traffic tunneling and network acceleration with real-time traffic monitoring.
+**灵缇游戏(game.lingti.com) / 灵缇路由(router.lingti.com)**
+
+Lingti SDK is a lightweight C SDK for game traffic tunneling and network acceleration with real-time traffic monitoring.
 
 ## Overview
 
