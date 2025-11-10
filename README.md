@@ -19,6 +19,15 @@ Lingti SDK is a high-performance network tunneling library designed for game tra
 
 ## Quick Start
 
+### Minimum Code(6 lines) to work
+```c
+#include <stdio.h>
+#include "../lingti_sdk.h"
+int main() {
+    StartTun2RWithConfigFile("encrypted_config.txt");
+    return 0;
+}
+```
 ### Basic Usage
 
 ```c
