@@ -1,0 +1,11 @@
+LIBRARY lingti_sdk
+EXPORTS
+StartTun2R
+StartTun2RWithConfigFile
+StopTun2R
+IsServiceRunning
+GetSDKVersion
+GetLastErrorMessage
+FreeString
+GetTrafficStats
+FlushDNSCache
