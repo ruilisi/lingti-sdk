@@ -3,7 +3,6 @@
 # Note: The SDK is designed for Windows. This Makefile works on both Windows and Unix-like systems.
 
 # Detect OS
-OS=$(uname)
 ifeq ($(OS),Windows_NT)
 	# Windows (native cmd/PowerShell)
 	EXE_EXT = .exe
