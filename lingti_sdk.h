@@ -219,11 +219,17 @@ int FlushDNSCache(void);
  * @param mask - Pointer to receive subnet mask string (can be NULL)
  * @param ip - Pointer to receive console IP address string (can be NULL)
  * @param dns - Pointer to receive DNS server string (can be NULL)
+ * @return Console IP state:
+ *         0 = idle (not started)
+ *         1 = in_progress (IP assignment in progress)
+ *         2 = completed (IP assignment successful)
+ *         3 = failed (IP assignment failed)
  *
  * Example:
  *   char *gateway, *mask, *ip, *dns;
- *   GetConsoleConfig(&gateway, &mask, &ip, &dns);
- *   printf("Gateway: %s, Mask: %s, IP: %s, DNS: %s\n", gateway, mask, ip, dns);
+ *   int state = GetConsoleConfig(&gateway, &mask, &ip, &dns);
+ *   printf("State: %d, Gateway: %s, Mask: %s, IP: %s, DNS: %s\n",
+ *          state, gateway, mask, ip, dns);
  *   FreeString(gateway);
  *   FreeString(mask);
  *   FreeString(ip);
@@ -231,7 +237,7 @@ int FlushDNSCache(void);
  *
  * Note: Caller must call FreeString() on each returned string to avoid memory leaks.
  */
-void GetConsoleConfig(char** gateway, char** mask, char** ip, char** dns);
+int GetConsoleConfig(char** gateway, char** mask, char** ip, char** dns);
 
 #ifdef __cplusplus
 }
