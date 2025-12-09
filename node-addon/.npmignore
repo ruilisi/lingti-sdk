@@ -4,6 +4,11 @@ build/
 *.obj
 *.tlog
 
+# But keep the required Windows binaries
+!lingti_sdk.dll
+!lingti_sdk.lib
+!lingtiwfp64.sys
+
 # Documentation
 docs/
 *.md
