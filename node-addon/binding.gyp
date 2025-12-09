@@ -17,14 +17,14 @@
           "OS=='win'",
           {
             "libraries": [
-              "../../lingti_sdk.lib"
+              "<(module_root_dir)/lingti_sdk.lib"
             ],
             "copies": [
               {
                 "destination": "<(module_root_dir)/build/Release/",
                 "files": [
-                  "<(module_root_dir)/../lingti_sdk.dll",
-                  "<(module_root_dir)/../lingtiwfp64.sys"
+                  "<(module_root_dir)/lingti_sdk.dll",
+                  "<(module_root_dir)/lingtiwfp64.sys"
                 ]
               }
             ]
