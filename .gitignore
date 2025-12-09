@@ -3,3 +3,9 @@
 *.dll
 *.lib
 dist
+
+# Node addon files
+node-addon/node_modules/
+node-addon/build/
+node-addon/*.node
+node-addon/prebuilds/

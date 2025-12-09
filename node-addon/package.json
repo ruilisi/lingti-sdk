@@ -1,0 +1,34 @@
+{
+  "name": "lingti-sdk",
+  "version": "1.4.3",
+  "description": "Node.js native addon for Lingti SDK - Network Tunneling Service",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "install": "node scripts/install.js",
+    "build": "node-gyp rebuild",
+    "clean": "node-gyp clean",
+    "test": "node test.js"
+  },
+  "keywords": [
+    "lingti",
+    "vpn",
+    "tunnel",
+    "network",
+    "napi",
+    "addon"
+  ],
+  "author": "Ruilisi",
+  "license": "UNLICENSED",
+  "gypfile": true,
+  "dependencies": {
+    "node-addon-api": "^8.0.0",
+    "node-gyp": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

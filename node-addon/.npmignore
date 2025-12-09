@@ -1,0 +1,32 @@
+# Source files
+src/
+c/
+
+# Build artifacts
+build/
+*.o
+*.obj
+*.tlog
+*.log
+
+# Documentation
+docs/
+*.md
+!README.md
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+
+# Misc
+scripts/
+test.js
+config/
+*.go
+go.mod
+go.sum
+Makefile
