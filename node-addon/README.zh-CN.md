@@ -86,6 +86,22 @@ import * as lingti from 'lingti-sdk';
 lingti.startTun2RWithConfigFile('encrypted_config.txt');
 ```
 
+## 文档
+
+### 完整指南
+
+- **[API 参考](docs/API.zh-CN.md)** - 带有详细示例的完整 API 文档
+- **[配置指南](docs/CONFIGURATION.zh-CN.md)** - 如何获取和使用加密配置
+- **[示例](docs/EXAMPLES.zh-CN.md)** - 实用代码示例和用例
+- **[故障排除](docs/TROUBLESHOOTING.zh-CN.md)** - 常见问题和解决方案
+
+### 快速链接
+
+- [安装](#安装)
+- [使用方法](#使用方法)
+- [测试](#测试)
+- [平台支持](#平台支持)
+
 ## API 参考
 
 ### 核心函数
@@ -142,7 +158,7 @@ const running = lingti.isServiceRunning();
 
 获取 SDK 版本字符串。
 
-- **返回值：** `string` - 版本号（例如："1.4.4"）
+- **返回值：** `string` - 版本号（例如："1.4.5"）
 
 ```javascript
 const version = lingti.getSDKVersion();
@@ -324,4 +340,4 @@ npm run build
 
 ## 版本
 
-SDK 版本：1.4.4
+SDK 版本：1.4.5

@@ -283,4 +283,4 @@ Copyright (c) 2025 Ruilisi
 
 ## Version
 
-Current version: 1.4.4
+Current version: 1.4.5

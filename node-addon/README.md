@@ -86,6 +86,22 @@ import * as lingti from 'lingti-sdk';
 lingti.startTun2RWithConfigFile('encrypted_config.txt');
 ```
 
+## Documentation
+
+### Complete Guides
+
+- **[API Reference](docs/API.md)** - Complete API documentation with detailed examples
+- **[Configuration Guide](docs/CONFIGURATION.md)** - How to obtain and use encrypted configurations
+- **[Examples](docs/EXAMPLES.md)** - Practical code examples and use cases
+- **[Troubleshooting](docs/TROUBLESHOOTING.md)** - Common issues and solutions
+
+### Quick Links
+
+- [Installation](#installation)
+- [Basic Usage](#usage)
+- [Testing](#testing)
+- [Platform Support](#platform-support)
+
 ## API Reference
 
 ### Core Functions
@@ -324,4 +340,4 @@ Proprietary - Copyright (c) 2025 Ruilisi
 
 ## Version
 
-SDK Version: 1.4.4
+SDK Version: 1.4.5
