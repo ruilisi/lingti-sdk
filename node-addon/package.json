@@ -8,7 +8,8 @@
     "install": "node scripts/install.js",
     "build": "node-gyp rebuild",
     "clean": "node-gyp clean",
-    "test": "node test.js"
+    "test": "node test.js",
+    "publish:version": "bash scripts/publish.sh"
   },
   "keywords": [
     "lingti",
