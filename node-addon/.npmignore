@@ -1,18 +1,14 @@
-# Source files
-src/
-c/
-
-# Build artifacts
+# Build artifacts only (keep source files!)
 build/
 *.o
 *.obj
 *.tlog
-*.log
 
 # Documentation
 docs/
 *.md
 !README.md
+CHANGELOG.md
 
 # Git
 .git/
@@ -21,11 +17,16 @@ docs/
 # IDE
 .vscode/
 .idea/
+.claude/
 
-# Misc
-scripts/
+# Test files
 test.js
+example.js
+
+# Config
 config/
+
+# Go-related (if any)
 *.go
 go.mod
 go.sum
