@@ -31,6 +31,8 @@ if (!lingti.isAddonAvailable()) {
 console.log('SDK 版本:', lingti.getSDKVersion());
 
 // 启动隧道
+// 获取 encrypted_config：访问 https://game.lingti.com/sdk
+// 选择您的游戏（需要加速的游戏）和隧道线路（线路）
 const result = lingti.startTun2RWithConfigFile('encrypted_config.txt');
 if (result === 0) {
     console.log('隧道启动成功');

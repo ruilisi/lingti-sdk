@@ -53,7 +53,8 @@ if (!lingti.isAddonAvailable()) {
 }
 
 // 使用加密配置文件启动服务（base64 编码文本）
-// 要获取加密配置，请选择游戏和线路，然后从后端服务请求
+// 获取加密配置：访问 https://game.lingti.com/sdk
+// 选择您的游戏（需要加速的游戏）和隧道线路（线路）
 const result = lingti.startTun2RWithConfigFile('encrypted_config.txt');
 if (result === 0) {
     console.log('服务启动成功！');

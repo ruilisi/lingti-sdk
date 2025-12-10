@@ -26,7 +26,9 @@ if (!lingti.isAddonAvailable()) {
 }
 
 // Example usage (Windows only)
-// encrypted_config is a base64 encoded string containing the encrypted configuration, can be applied here: https://game.lingti.com/sdk
+// To obtain encrypted_config: visit https://game.lingti.com/sdk
+// Select your game (需要加速的游戏) and tunnel line (线路)
+// encrypted_config is a base64 encoded string containing the encrypted configuration
 const encrypted_config = ""
 
 try {

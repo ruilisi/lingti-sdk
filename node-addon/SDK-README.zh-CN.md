@@ -94,7 +94,7 @@ gcc your_app.c -L. -llingti_sdk -o your_app.exe
 - **实时监控** - 跟踪发送/接收的字节和数据包
 - **DNS 管理** - 内置 DNS 缓存控制
 - **跨平台** - 支持 Windows（DLL）、Linux 和 macOS
-- **灵活配置** - 通过字符串或文件的基于 JSON 的配置
+- **加密配置** - 通过字符串或文件的安全加密配置
 - **流量统计** - 字节和数据包级别的监控
 - **错误处理** - 全面的错误码和消息
 
@@ -191,9 +191,15 @@ int main() {
 
 ### 加密配置
 
-SDK 支持加密配置文件以增强安全性。
-要创建加密配置文件，需要选择 `game` 和 `line`，然后将它们提交给 lingti 后端服务以获取加密文本。
-相关 API 将在[此处](https://xiemala.com/f/rY1aZz)请求后提供。
+SDK **仅**支持加密配置以增强安全性。
+
+获取加密配置的步骤：
+1. 访问 https://game.lingti.com/sdk
+2. 选择您的游戏（需要加速的游戏）
+3. 选择您的隧道线路（线路）
+4. 复制生成的 encrypted_config 字符串
+
+encrypted_config 是一个 Base64 编码的字符串，包含所有必要的隧道设置。
 
 ## API 参考
 

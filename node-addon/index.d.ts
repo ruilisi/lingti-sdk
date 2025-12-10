@@ -2,15 +2,6 @@
  * Lingti SDK - Node.js Native Addon TypeScript Definitions
  */
 
-export interface TunnelConfig {
-    Mode: string;
-    Server: string;
-    Token: string;
-    LogLevel?: string;
-    GameExes?: string[];
-    GameID: string;
-}
-
 export interface TrafficStats {
     txBytes: number;
     rxBytes: number;
@@ -50,15 +41,17 @@ export enum ConsoleIPState {
 }
 
 /**
- * Start the TUN2R service with JSON configuration
- * @param config - Configuration object or JSON string
+ * Start the TUN2R service with encrypted configuration
+ * Obtain encrypted_config from https://game.lingti.com/sdk by selecting game and tunnel line
+ * @param encryptedConfig - Base64 encoded encrypted configuration string
  * @returns 0 on success, negative error code on failure
  */
-export function startTun2R(config: TunnelConfig | string): number;
+export function startTun2R(encryptedConfig: string): number;
 
 /**
- * Start the TUN2R service using a config file
- * @param configPath - Path to config file (optional)
+ * Start the TUN2R service using an encrypted config file
+ * Obtain encrypted_config from https://game.lingti.com/sdk by selecting game and tunnel line
+ * @param configPath - Path to encrypted config file (optional, defaults to 'encrypted_config.txt')
  * @returns 0 on success, negative error code on failure
  */
 export function startTun2RWithConfigFile(configPath?: string): number;

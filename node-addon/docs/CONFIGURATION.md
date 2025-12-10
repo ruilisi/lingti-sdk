@@ -56,41 +56,33 @@ The encryption ensures that sensitive data cannot be read or modified without pr
 
 ## Obtaining Configuration
 
-### From Backend Service
+### From Lingti SDK Portal
 
-Configuration must be obtained from the Lingti backend service. The typical flow is:
+Configuration must be obtained from the Lingti SDK portal at **https://game.lingti.com/sdk**.
 
-1. **User Selection**: User selects the game and preferred routing line through your application UI
-2. **API Request**: Your application sends the selection to the backend API
-3. **Config Generation**: Backend generates and encrypts the appropriate configuration
-4. **Config Delivery**: Encrypted configuration is returned to your application
+**How to get your encrypted_config:**
 
-### API Endpoint (Example)
+1. Visit https://game.lingti.com/sdk
+2. Select your game (需要加速的游戏) from the dropdown
+3. Select your preferred tunnel line (线路)
+4. Copy the generated `encrypted_config` string
+
+The encrypted_config is a Base64-encoded string that contains all necessary tunnel settings including server addresses, authentication tokens, and routing rules.
+
+### Example Usage
 
 ```javascript
-const axios = require('axios');
+// After obtaining encrypted_config from https://game.lingti.com/sdk
+const encryptedConfig = "SGVsbG8gV29ybGQhVGhpcyBpcyBhbiBlbmNyeXB0ZWQgY29uZmlndXJhdGlvbg==";
 
-async function getEncryptedConfig(gameId, lineId) {
-    try {
-        const response = await axios.post('https://api.lingti.com/v1/config/generate', {
-            game: gameId,
-            line: lineId,
-            userId: 'user123'  // Your user identifier
-        }, {
-            headers: {
-                'Authorization': 'Bearer YOUR_API_KEY'
-            }
-        });
+// Use it directly
+lingti.startTun2R(encryptedConfig);
 
-        return response.data.encryptedConfig;
-    } catch (error) {
-        console.error('Failed to get config:', error);
-        throw error;
-    }
-}
+// Or save it to a file
+const fs = require('fs');
+fs.writeFileSync('encrypted_config.txt', encryptedConfig);
+lingti.startTun2RWithConfigFile('encrypted_config.txt');
 ```
-
-**Note**: Contact Lingti support to get API access. See: https://xiemala.com/f/rY1aZz
 
 ### Configuration Formats
 

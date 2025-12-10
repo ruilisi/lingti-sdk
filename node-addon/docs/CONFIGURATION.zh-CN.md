@@ -56,41 +56,33 @@ Lingti SDK 使用**加密配置**以增强安全性。所有配置数据均经�
 
 ## 获取配置
 
-### 从后端服务获取
+### 从 Lingti SDK 门户获取
 
-配置必须从 Lingti 后端服务获取。典型流程是：
+配置必须从 Lingti SDK 门户 **https://game.lingti.com/sdk** 获取。
 
-1. **用户选择**：用户通过应用程序 UI 选择游戏和首选路由线路
-2. **API 请求**：应用程序将选择发送到后端 API
-3. **配置生成**：后端生成并加密适当的配置
-4. **配置交付**：加密配置返回到应用程序
+**如何获取您的 encrypted_config：**
 
-### API 端点（示例）
+1. 访问 https://game.lingti.com/sdk
+2. 从下拉列表中选择您的游戏（需要加速的游戏）
+3. 选择您首选的隧道线路（线路）
+4. 复制生成的 `encrypted_config` 字符串
+
+encrypted_config 是一个 Base64 编码的字符串，包含所有必要的隧道设置，包括服务器地址、身份验证令牌和路由规则。
+
+### 使用示例
 
 ```javascript
-const axios = require('axios');
+// 从 https://game.lingti.com/sdk 获取 encrypted_config 后
+const encryptedConfig = "SGVsbG8gV29ybGQhVGhpcyBpcyBhbiBlbmNyeXB0ZWQgY29uZmlndXJhdGlvbg==";
 
-async function getEncryptedConfig(gameId, lineId) {
-    try {
-        const response = await axios.post('https://api.lingti.com/v1/config/generate', {
-            game: gameId,
-            line: lineId,
-            userId: 'user123'  // 您的用户标识符
-        }, {
-            headers: {
-                'Authorization': 'Bearer YOUR_API_KEY'
-            }
-        });
+// 直接使用
+lingti.startTun2R(encryptedConfig);
 
-        return response.data.encryptedConfig;
-    } catch (error) {
-        console.error('获取配置失败:', error);
-        throw error;
-    }
-}
+// 或保存到文件
+const fs = require('fs');
+fs.writeFileSync('encrypted_config.txt', encryptedConfig);
+lingti.startTun2RWithConfigFile('encrypted_config.txt');
 ```
-
-**注意**：联系 Lingti 支持以获取 API 访问权限。参见：https://xiemala.com/f/rY1aZz
 
 ### 配置格式
 

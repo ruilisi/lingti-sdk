@@ -53,7 +53,8 @@ if (!lingti.isAddonAvailable()) {
 }
 
 // Start the service with encrypted config file (base64 encoded text)
-// To obtain encrypted config, select game and line, then request from backend service
+// To obtain encrypted config: visit https://game.lingti.com/sdk
+// Select your game (需要加速的游戏) and tunnel line (线路)
 const result = lingti.startTun2RWithConfigFile('encrypted_config.txt');
 if (result === 0) {
     console.log('Service started successfully!');

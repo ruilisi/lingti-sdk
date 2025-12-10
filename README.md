@@ -92,7 +92,7 @@ When distributing your application, include:
 - **Real-time Monitoring** - Track transmitted/received bytes and packets
 - **DNS Management** - Built-in DNS cache control
 - **Cross-platform** - Windows (DLL), Linux, and macOS support
-- **Flexible Configuration** - JSON-based config via string or file
+- **Encrypted Configuration** - Secure encrypted config via string or file
 - **Traffic Statistics** - Byte and packet-level monitoring
 - **Error Handling** - Comprehensive error codes and messages
 
@@ -189,9 +189,15 @@ int main() {
 
 ### Encrypted Config
 
-The SDK supports encrypted configuration files for enhanced security.
-To create an encrypted config file, one needs to select `game` and `line`, then handle them to lingti backend service to apply the encrypted text.
-Related APIs will be provided once requested [here](https://xiemala.com/f/rY1aZz).
+The SDK **only** supports encrypted configuration for enhanced security.
+
+To obtain an encrypted configuration:
+1. Visit https://game.lingti.com/sdk
+2. Select your game (需要加速的游戏)
+3. Select your tunnel line (线路)
+4. Copy the provided encrypted_config string
+
+The encrypted_config is a Base64-encoded string that contains all necessary tunnel settings.
 
 ## API Reference
 
