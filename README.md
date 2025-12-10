@@ -1,6 +1,15 @@
 # Lingti SDK
 
+English | [简体中文](README.zh-CN.md)
+
 A lightweight C SDK for game traffic tunneling and network acceleration with real-time traffic monitoring.
+
+<p align="center">
+  <a href="https://game.lingti.com" style="text-decoration:none">
+    <img src="docs/assets/lingti-homepage.png" alt="Lingti homepage" width="100%" style="border-radius:14px;" />
+    <br /><em>Click to open the Lingti accelerator homepage</em>
+  </a>
+</p>
 
 ## Overview
 
@@ -15,6 +24,7 @@ The SDK is open source and available at: **https://github.com/ruilisi/lingti-sdk
 **Pre-compiled DLL/lib files for each SDK version are available in the [GitHub Releases](https://github.com/ruilisi/lingti-sdk/releases) section.**
 
 Each release includes:
+
 - `lingti_sdk.dll` - Main SDK library (13MB)
 - `lingti_sdk.lib` - Import library for linking (8.6KB)
 - `lingti_sdk.h` - C header file with API declarations
@@ -27,12 +37,14 @@ Each release includes:
 #### What is the DLL?
 
 The **DLL (Dynamic Link Library)** file (`lingti_sdk.dll`, 13MB) contains all the actual compiled code:
+
 - Complete Go runtime and garbage collector
 - All SDK functionality and business logic
 - Network tunneling implementation
 - Required at **runtime** when your application executes
 
 **Runtime requirement:** `lingti_sdk.dll` must be present when your application runs. Place it:
+
 - In the same directory as your `.exe` file (recommended)
 - In a system directory (e.g., `C:\Windows\System32`)
 - In any directory listed in your system's PATH environment variable
@@ -40,6 +52,7 @@ The **DLL (Dynamic Link Library)** file (`lingti_sdk.dll`, 13MB) contains all th
 #### What is the LIB?
 
 The **LIB (Import Library)** file (`lingti_sdk.lib`, 8.6KB) is much smaller because it contains only:
+
 - Stub code with function name references
 - Metadata telling the linker where to find functions in the DLL
 - Import table information
@@ -50,15 +63,16 @@ The **LIB (Import Library)** file (`lingti_sdk.lib`, 8.6KB) is much smaller beca
 
 #### When to Use Each File
 
-| File | Used When | Purpose |
-|------|-----------|---------|
-| `lingti_sdk.dll` | Runtime (always) | Contains all actual code, must be distributed with your app |
-| `lingti_sdk.lib` | Compile-time (MSVC only) | Tells linker how to find DLL functions |
-| `lingti_sdk.h` | Compile-time (always) | Provides function declarations for your C code |
+| File             | Used When                | Purpose                                                     |
+| ---------------- | ------------------------ | ----------------------------------------------------------- |
+| `lingti_sdk.dll` | Runtime (always)         | Contains all actual code, must be distributed with your app |
+| `lingti_sdk.lib` | Compile-time (MSVC only) | Tells linker how to find DLL functions                      |
+| `lingti_sdk.h`   | Compile-time (always)    | Provides function declarations for your C code              |
 
 #### Compiler-Specific Usage
 
 **MSVC (Visual Studio):**
+
 ```bash
 # Compilation requires .lib file
 cl your_app.c lingti_sdk.lib
@@ -68,6 +82,7 @@ your_app.exe    # needs lingti_sdk.dll present
 ```
 
 **MinGW/GCC:**
+
 ```bash
 # Can link directly against .dll (no .lib needed)
 gcc your_app.c -L. -llingti_sdk -o your_app.exe
@@ -79,6 +94,7 @@ gcc your_app.c -L. -llingti_sdk -o your_app.exe
 #### Distribution Checklist
 
 When distributing your application, include:
+
 - ✅ Your compiled `.exe` file
 - ✅ `lingti_sdk.dll` (13MB - **required at runtime**)
 - ✅ `lingtiwfp64.sys` (Windows driver - **required at runtime**)
@@ -192,12 +208,22 @@ int main() {
 The SDK **only** supports encrypted configuration for enhanced security.
 
 To obtain an encrypted configuration:
+
 1. Visit https://game.lingti.com/sdk
 2. Select your game (需要加速的游戏)
 3. Select your tunnel line (线路)
 4. Copy the provided encrypted_config string
 
 The encrypted_config is a Base64-encoded string that contains all necessary tunnel settings.
+
+Click the image below to open the generator and download your `encrypted_config` file:
+
+<p align="center">
+  <a href="https://game.lingti.com/sdk" style="text-decoration:none">
+    <img src="docs/assets/lingti-sdk.png" alt="Generate encrypted_config" width="80%" style="border-radius:14px;" />
+    <br /><em>Click the image to open the encrypted_config generator</em>
+  </a>
+</p>
 
 ## API Reference
 
@@ -274,6 +300,22 @@ cl your_app.c lingti_sdk.lib
 x86_64-w64-mingw32-gcc your_app.c lingti_sdk.lib -o your_app.exe
 ```
 
+### Node.js package (lingti-sdk) (Recommended)
+
+- Windows is required to run the native addon; on macOS/Linux the install succeeds but skips the native build.
+- Install from npm:
+
+```bash
+npm install lingti-sdk
+```
+
+```javascript
+const lingti = require('lingti-sdk');
+if (lingti.isAddonAvailable()) {
+  lingti.startTun2RWithConfigFile('encrypted_config.txt');
+}
+```
+
 ## Examples
 
 See the `examples/` directory for complete working examples:
@@ -288,3 +330,21 @@ Copyright (c) 2025 Ruilisi
 ## Version
 
 Current version: 1.4.3
+
+## Demo Video
+
+<p align="center">
+  <a href="https://www.bilibili.com/video/BV1Y4SiBLEWB/?share_source=copy_web&vd_source=6b41ec669aaccb71ab94fe20193f3cd1" style="text-decoration:none">
+    <img src="docs/assets/sdk-video-frontpage.png" alt="Bilibili tutorial" width="65%" style="border-radius:14px;" />
+    <br /><em>Click to watch the tutorial on Bilibili</em>
+  </a>
+</p>
+
+## Contact Us
+
+<p align="center">
+  <a href="https://game.lingti.com/contact_us" style="text-decoration:none">
+    <img src="docs/assets/wechat-qr.png" alt="Contact Lingti" width="180" style="border-radius:14px;" />
+    <br /><em>Scan or click to reach the Lingti team</em>
+  </a>
+</p>
