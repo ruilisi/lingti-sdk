@@ -55,7 +55,7 @@ if [ "$CURRENT_BRANCH" != "main" ]; then
     fi
 fi
 
-steps=5
+steps=6
 echo -e "${GREEN}Step 1/$steps: Updating package.json...${NC}"
 # Update version in package.json using sed (macOS compatible)
 sed -i '' "s/\"version\": \".*\"/\"version\": \"${NEW_VERSION}\"/" package.json
@@ -74,7 +74,24 @@ sed -i '' "s/\"${CURRENT_VERSION}\"/\"${NEW_VERSION}\"/g" README.zh-CN.md 2>/dev
 echo -e "${GREEN}Step 3/$steps: Creating git tag...${NC}"
 git tag -a "v${NEW_VERSION}" -m "Release version ${NEW_VERSION}" || echo 0
 
-echo -e "${GREEN}Step 4/$steps: Checking npm authentication...${NC}"
+echo -e "${GREEN}Step 4/$steps: Copying files from parent directory...${NC}"
+# Copy the driver file from parent directory
+if [ -f "../lingtiwfp64.sys" ]; then
+    cp ../lingtiwfp64.sys .
+    echo "✓ Copied lingtiwfp64.sys"
+else
+    echo -e "${RED}Warning: ../lingtiwfp64.sys not found${NC}"
+fi
+
+# Copy the header file from parent directory
+if [ -f "../lingti_sdk.h" ]; then
+    cp ../lingti_sdk.h .
+    echo "✓ Copied lingti_sdk.h"
+else
+    echo -e "${RED}Warning: ../lingti_sdk.h not found${NC}"
+fi
+
+echo -e "${GREEN}Step 5/$steps: Checking npm authentication...${NC}"
 if ! npm whoami &>/dev/null; then
     echo -e "${RED}Error: Not logged in to npm${NC}"
     echo "Please run: npm login"
@@ -84,7 +101,7 @@ fi
 NPM_USER=$(npm whoami)
 echo -e "Logged in as: ${NPM_USER}"
 
-echo -e "${GREEN}Step 5/$steps: Publishing to npm...${NC}"
+echo -e "${GREEN}Step 6/$steps: Publishing to npm...${NC}"
 npm publish
 
 echo ""

@@ -341,4 +341,4 @@ Proprietary - Copyright (c) 2025 Ruilisi
 
 ## Version
 
-SDK Version: 1.5.0
+SDK Version: 1.5.2
