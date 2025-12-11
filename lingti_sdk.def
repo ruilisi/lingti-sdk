@@ -13,3 +13,4 @@ RunPing
 StopPing
 FlushDNSCache
 GetConsoleConfig
+GetDeviceID

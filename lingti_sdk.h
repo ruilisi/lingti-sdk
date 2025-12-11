@@ -4,7 +4,7 @@
  * This SDK provides network tunneling capabilities for game traffic routing.
  *
  * Copyright (c) 2025 Ruilisi
- * Version: 1.4.2
+ * Version: 1.4.4
  */
 
 #ifndef LINGTI_SDK_H
@@ -87,7 +87,7 @@ int IsServiceRunning(void);
 /**
  * Get the SDK version string
  *
- * @return Version string (e.g., "1.4.2")
+ * @return Version string (e.g., "1.4.4")
  *
  * Note: Caller must call FreeString() to release the returned string.
  */
@@ -238,6 +238,24 @@ int FlushDNSCache(void);
  * Note: Caller must call FreeString() on each returned string to avoid memory leaks.
  */
 int GetConsoleConfig(char** gateway, char** mask, char** ip, char** dns);
+
+/**
+ * Get the unique device ID
+ *
+ * Returns the Windows Machine GUID which uniquely identifies this Windows installation.
+ * The Machine GUID is read from the Windows registry at:
+ * HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Cryptography\MachineGuid
+ *
+ * @return Device ID string (Windows Machine GUID)
+ *
+ * Example:
+ *   char* deviceId = GetDeviceID();
+ *   printf("Device ID: %s\n", deviceId);
+ *   FreeString(deviceId);
+ *
+ * Note: Caller must call FreeString() to release the returned string.
+ */
+char* GetDeviceID(void);
 
 #ifdef __cplusplus
 }
