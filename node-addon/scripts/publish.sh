@@ -43,14 +43,6 @@ if [[ ! $REPLY =~ ^[Yy]$ ]]; then
     exit 0
 fi
 
-# Check for uncommitted changes
-if [ -n "$(git status --porcelain)" ]; then
-    echo -e "${RED}Error: You have uncommitted changes${NC}"
-    echo "Please commit or stash your changes before publishing"
-    git status --short
-    exit 1
-fi
-
 # Check if on main branch
 CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 if [ "$CURRENT_BRANCH" != "main" ]; then
@@ -63,11 +55,12 @@ if [ "$CURRENT_BRANCH" != "main" ]; then
     fi
 fi
 
-echo -e "${GREEN}Step 1/6: Updating package.json...${NC}"
+steps=5
+echo -e "${GREEN}Step 1/$steps: Updating package.json...${NC}"
 # Update version in package.json using sed (macOS compatible)
 sed -i '' "s/\"version\": \".*\"/\"version\": \"${NEW_VERSION}\"/" package.json
 
-echo -e "${GREEN}Step 2/6: Updating README files...${NC}"
+echo -e "${GREEN}Step 2/$steps: Updating README files...${NC}"
 # Update version in all README files
 sed -i '' "s/SDK Version: ${CURRENT_VERSION}/SDK Version: ${NEW_VERSION}/g" README.md 2>/dev/null || true
 sed -i '' "s/SDK 版本：${CURRENT_VERSION}/SDK 版本：${NEW_VERSION}/g" README.zh-CN.md 2>/dev/null || true
@@ -78,14 +71,10 @@ sed -i '' "s/当前版本：${CURRENT_VERSION}/当前版本：${NEW_VERSION}/g" 
 sed -i '' "s/\"${CURRENT_VERSION}\"/\"${NEW_VERSION}\"/g" README.md 2>/dev/null || true
 sed -i '' "s/\"${CURRENT_VERSION}\"/\"${NEW_VERSION}\"/g" README.zh-CN.md 2>/dev/null || true
 
-echo -e "${GREEN}Step 3/6: Creating git tag...${NC}"
-git tag -a "v${NEW_VERSION}" -m "Release version ${NEW_VERSION}"
+echo -e "${GREEN}Step 3/$steps: Creating git tag...${NC}"
+git tag -a "v${NEW_VERSION}" -m "Release version ${NEW_VERSION}" || echo 0
 
-echo -e "${GREEN}Step 4/6: Pushing to remote...${NC}"
-git push
-git push --tags
-
-echo -e "${GREEN}Step 5/6: Checking npm authentication...${NC}"
+echo -e "${GREEN}Step 4/$steps: Checking npm authentication...${NC}"
 if ! npm whoami &>/dev/null; then
     echo -e "${RED}Error: Not logged in to npm${NC}"
     echo "Please run: npm login"
@@ -95,7 +84,7 @@ fi
 NPM_USER=$(npm whoami)
 echo -e "Logged in as: ${NPM_USER}"
 
-echo -e "${GREEN}Step 6/6: Publishing to npm...${NC}"
+echo -e "${GREEN}Step 5/$steps: Publishing to npm...${NC}"
 npm publish
 
 echo ""
