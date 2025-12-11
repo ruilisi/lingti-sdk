@@ -10,6 +10,7 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "lingti_sdk.h"
 
 #ifdef _WIN32
@@ -26,12 +27,17 @@ int main() {
 
     // Check SDK version
     char* version = GetSDKVersion();
-    printf("SDK Version: %s\n\n", version);
-    FreeString(version);
+    printf("SDK Version: %s\n", version);
+    free(version);
+
+    // Get device ID
+    char* deviceId = GetDeviceID();
+    printf("Device ID: %s\n\n", deviceId);
+    free(deviceId);
 
     // Path to encrypted config file
     // For encryption details, see API.md
-    char* configFile = "encrypted_token.txt";
+    char* configFile = "encrypted_config.txt";
 
     printf("Starting service from config file...\n");
     int result = StartTun2RWithConfigFile(configFile);
@@ -39,7 +45,7 @@ int main() {
     if (result != 0) {
         char* error = GetLastErrorMessage();
         printf("Failed to start service (code %d): %s\n", result, error);
-        FreeString(error);
+        free(error);
         return 1;
     }
 
@@ -92,7 +98,7 @@ int main() {
     } else {
         char* error = GetLastErrorMessage();
         printf("Failed to stop service (code %d): %s\n", result, error);
-        FreeString(error);
+        free(error);
     }
 
     printf("\nExample completed. See API.md for detailed documentation.\n");

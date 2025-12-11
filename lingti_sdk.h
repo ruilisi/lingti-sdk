@@ -89,7 +89,7 @@ int IsServiceRunning(void);
  *
  * @return Version string (e.g., "1.4.4")
  *
- * Note: Caller must call FreeString() to release the returned string.
+ * Note: Caller must call free() to release the returned string.
  */
 char* GetSDKVersion(void);
 
@@ -98,23 +98,9 @@ char* GetSDKVersion(void);
  *
  * @return Error message string, or "No error" if no error occurred
  *
- * Note: Caller must call FreeString() to release the returned string.
+ * Note: Caller must call free() to release the returned string.
  */
 char* GetLastErrorMessage(void);
-
-/**
- * Free a string allocated by the SDK
- *
- * This function must be called to free any string returned by:
- * - GetSDKVersion()
- * - GetLastErrorMessage()
- *
- * @param s - String pointer to free
- *
- * Note: GetLastError was renamed to GetLastErrorMessage to avoid conflict
- * with the Windows API GetLastError() function.
- */
-void FreeString(char* s);
 
 /**
  * Get current traffic statistics
@@ -230,12 +216,12 @@ int FlushDNSCache(void);
  *   int state = GetConsoleConfig(&gateway, &mask, &ip, &dns);
  *   printf("State: %d, Gateway: %s, Mask: %s, IP: %s, DNS: %s\n",
  *          state, gateway, mask, ip, dns);
- *   FreeString(gateway);
- *   FreeString(mask);
- *   FreeString(ip);
- *   FreeString(dns);
+ *   free(gateway);
+ *   free(mask);
+ *   free(ip);
+ *   free(dns);
  *
- * Note: Caller must call FreeString() on each returned string to avoid memory leaks.
+ * Note: Caller must call free() on each returned string to avoid memory leaks.
  */
 int GetConsoleConfig(char** gateway, char** mask, char** ip, char** dns);
 
@@ -251,9 +237,9 @@ int GetConsoleConfig(char** gateway, char** mask, char** ip, char** dns);
  * Example:
  *   char* deviceId = GetDeviceID();
  *   printf("Device ID: %s\n", deviceId);
- *   FreeString(deviceId);
+ *   free(deviceId);
  *
- * Note: Caller must call FreeString() to release the returned string.
+ * Note: Caller must call free() to release the returned string.
  */
 char* GetDeviceID(void);
 

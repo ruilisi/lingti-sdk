@@ -1,6 +1,7 @@
 #include <napi.h>
-#include "lingti_sdk.h"
+#include "../lingti_sdk.h"
 #include <cstring>
+#include <cstdlib>
 
 // Helper function to create JavaScript strings from C strings and free them
 Napi::String CreateAndFreeString(Napi::Env env, char* cStr) {
@@ -8,7 +9,7 @@ Napi::String CreateAndFreeString(Napi::Env env, char* cStr) {
         return Napi::String::New(env, "");
     }
     Napi::String result = Napi::String::New(env, cStr);
-    FreeString(cStr);
+    free(cStr);
     return result;
 }
 
@@ -134,20 +135,6 @@ Napi::Value FlushDNSCache_Wrapper(const Napi::CallbackInfo& info) {
     return Napi::Number::New(env, result);
 }
 
-// Wrapper for DeleteService - runs "sc delete lingtiwfp"
-Napi::Value DeleteService_Wrapper(const Napi::CallbackInfo& info) {
-    Napi::Env env = info.Env();
-
-    #ifdef _WIN32
-    // Execute "sc delete lingtiwfp" command
-    int result = system("sc delete lingtiwfp >nul 2>&1");
-    return Napi::Number::New(env, result);
-    #else
-    // Not supported on non-Windows platforms
-    return Napi::Number::New(env, -1);
-    #endif
-}
-
 // Wrapper for GetConsoleConfig
 Napi::Value GetConsoleConfig_Wrapper(const Napi::CallbackInfo& info) {
     Napi::Env env = info.Env();
@@ -173,6 +160,14 @@ Napi::Value GetConsoleConfig_Wrapper(const Napi::CallbackInfo& info) {
     result.Set("stateStr", Napi::String::New(env, stateStr));
 
     return result;
+}
+
+// Wrapper for GetDeviceID
+Napi::Value GetDeviceID_Wrapper(const Napi::CallbackInfo& info) {
+    Napi::Env env = info.Env();
+
+    char* deviceId = GetDeviceID();
+    return CreateAndFreeString(env, deviceId);
 }
 
 // Export error codes as constants
@@ -201,8 +196,8 @@ Napi::Object Init(Napi::Env env, Napi::Object exports) {
     exports.Set("runPing", Napi::Function::New(env, RunPing_Wrapper));
     exports.Set("stopPing", Napi::Function::New(env, StopPing_Wrapper));
     exports.Set("flushDNSCache", Napi::Function::New(env, FlushDNSCache_Wrapper));
-    exports.Set("deleteService", Napi::Function::New(env, DeleteService_Wrapper));
     exports.Set("getConsoleConfig", Napi::Function::New(env, GetConsoleConfig_Wrapper));
+    exports.Set("getDeviceID", Napi::Function::New(env, GetDeviceID_Wrapper));
 
     // Export error codes
     exports.Set("ErrorCodes", GetErrorCodes(env));

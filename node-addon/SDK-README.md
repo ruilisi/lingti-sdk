@@ -131,7 +131,7 @@ int main() {
     // Check SDK version
     char* version = GetSDKVersion();
     printf("SDK Version: %s\n\n", version);
-    FreeString(version);
+    free(version);
 
     // Path to encrypted config file
     // For encryption details, see API.md
@@ -143,7 +143,7 @@ int main() {
     if (result != 0) {
         char* error = GetLastErrorMessage();
         printf("Failed to start service (code %d): %s\n", result, error);
-        FreeString(error);
+        free(error);
         return 1;
     }
 
@@ -180,7 +180,7 @@ int main() {
     } else {
         char* error = GetLastErrorMessage();
         printf("Failed to stop service (code %d): %s\n", result, error);
-        FreeString(error);
+        free(error);
     }
 
     printf("\nExample completed. See API.md for detailed documentation.\n");
@@ -218,7 +218,7 @@ The encrypted_config is a Base64-encoded string that contains all necessary tunn
 
 ### Memory Management
 
-- `FreeString(char* s)` - Free strings returned by SDK functions
+- Use standard C `free()` to release strings returned by SDK functions (`GetSDKVersion()`, `GetLastErrorMessage()`, `GetDeviceID()`, and string parameters from `GetConsoleConfig()`)
 
 ## Error Codes
 

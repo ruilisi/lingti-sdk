@@ -6,7 +6,6 @@ StopTun2R
 IsServiceRunning
 GetSDKVersion
 GetLastErrorMessage
-FreeString
 GetTrafficStats
 GetLastPingStats
 RunPing

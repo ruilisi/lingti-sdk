@@ -131,7 +131,7 @@ int main() {
     // 检查 SDK 版本
     char* version = GetSDKVersion();
     printf("SDK 版本: %s\n\n", version);
-    FreeString(version);
+    free(version);
 
     // 加密配置文件路径
     // 有关加密详情，请参见 API.md
@@ -143,7 +143,7 @@ int main() {
     if (result != 0) {
         char* error = GetLastErrorMessage();
         printf("启动服务失败（代码 %d）：%s\n", result, error);
-        FreeString(error);
+        free(error);
         return 1;
     }
 
@@ -180,7 +180,7 @@ int main() {
     } else {
         char* error = GetLastErrorMessage();
         printf("停止服务失败（代码 %d）：%s\n", result, error);
-        FreeString(error);
+        free(error);
     }
 
     printf("\n示例完成。详细文档请参见 API.md。\n");
@@ -218,7 +218,7 @@ encrypted_config 是一个 Base64 编码的字符串，包含所有必要的隧�
 
 ### 内存管理
 
-- `FreeString(char* s)` - 释放 SDK 函数返回的字符串
+- 使用标准 C 的 `free()` 释放 SDK 函数返回的字符串（`GetSDKVersion()`、`GetLastErrorMessage()`、`GetDeviceID()` 以及 `GetConsoleConfig()` 的字符串参数）
 
 ## 错误码
 
