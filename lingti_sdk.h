@@ -4,7 +4,7 @@
  * This SDK provides network tunneling capabilities for game traffic routing.
  *
  * Copyright (c) 2025 Ruilisi
- * Version: 1.4.4
+ * Version: 1.5.0
  */
 
 #ifndef LINGTI_SDK_H
@@ -87,7 +87,7 @@ int IsServiceRunning(void);
 /**
  * Get the SDK version string
  *
- * @return Version string (e.g., "1.4.4")
+ * @return Version string
  *
  * Note: Caller must call free() to release the returned string.
  */
