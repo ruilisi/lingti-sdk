@@ -1,0 +1,32 @@
+Proprietary License
+
+Copyright (c) 2025 Ruilisi
+
+RESTRICTED USE LICENSE
+
+Permission is hereby granted to any person obtaining a copy of this software
+through npm installation to use the software for its intended purpose, subject
+to the following conditions:
+
+PERMITTED:
+- Installation via npm
+- Use of the software in applications
+- Integration with your own code
+
+PROHIBITED:
+- Redistribution of this software or any of its components
+- Reverse engineering, decompiling, or disassembling of binary files
+- Modification of binary files (lingti_sdk.dll, lingtiwfp64.sys)
+- Sublicensing or sale of this software
+- Removal or modification of copyright notices
+
+DISCLAIMER:
+THIS SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+For commercial licensing inquiries, please contact: Ruilisi

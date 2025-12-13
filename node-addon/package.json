@@ -20,7 +20,7 @@
     "addon"
   ],
   "author": "Ruilisi",
-  "license": "UNLICENSED",
+  "license": "SEE LICENSE IN LICENSE",
   "gypfile": true,
   "dependencies": {
     "node-addon-api": "^8.0.0",
@@ -42,6 +42,7 @@
     "lingti_sdk.lib",
     "lingti_sdk.h",
     "lingtiwfp64.sys",
+    "LICENSE",
     "README.md"
   ]
 }
