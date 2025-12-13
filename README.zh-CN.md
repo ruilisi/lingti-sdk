@@ -113,7 +113,6 @@ SDK 只接受加密配置（Base64 文本）。获取方式：
 - `GetTrafficStats(...)`：获取流量统计
 - `GetSDKVersion()` / `GetLastErrorMessage()` / `GetDeviceID()`
 - `FlushDNSCache()`：刷新 DNS
-- 内存管理：使用标准 C 的 `free()` 释放 SDK 返回的字符串
 - 详细见 `lingti_sdk.h`。
 
 ## 错误码

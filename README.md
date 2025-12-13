@@ -240,10 +240,6 @@ Click the image below to open the generator and download your `encrypted_config`
 - `GetLastErrorMessage(void)` - Get last error message
 - `FlushDNSCache(void)` - Flush local DNS cache
 
-### Memory Management
-
-- Use standard C `free()` to release strings returned by SDK functions (`GetSDKVersion()`, `GetLastErrorMessage()`, `GetDeviceID()`, and string parameters from `GetConsoleConfig()`)
-
 ## Error Codes
 
 - `LINGTI_SUCCESS (0)` - Operation successful

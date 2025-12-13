@@ -208,21 +208,30 @@ console.log(`Router: ${ping.router}ms, Takeoff: ${ping.takeoff}ms`);
 
 ### Ping Monitoring
 
-#### `runPing()`
+#### `runPing(intervalMilliSec)`
 
 Start periodic ping monitoring.
 
-- **Returns:** `number` - 0 on success, negative error code on failure
+- **Parameters:**
+  - `intervalMilliSec` (number): Ping interval in milliseconds. Minimum 100ms.
+- **Returns:** `number` - 0 on success, negative error code on failure:
+  - `-1`: Invalid server configuration
+  - `-2`: Ping is already running
 
 ```javascript
-lingti.runPing();
+// Ping every 5 seconds
+lingti.runPing(5000);
+
+// Other examples
+lingti.runPing(1000);  // Ping every 1 second
+lingti.runPing(50);    // Will use 100ms (minimum enforced)
 ```
 
 #### `stopPing()`
 
 Stop periodic ping monitoring.
 
-- **Returns:** `number` - 0 on success, negative error code on failure
+- **Returns:** `number` - 0 on success, `-1` if ping is not running
 
 ```javascript
 lingti.stopPing();
@@ -560,10 +569,11 @@ The encrypted_config is a Base64-encoded string that contains all necessary tunn
 - `GetSDKVersion(void)` - Get SDK version string
 - `GetLastErrorMessage(void)` - Get last error message
 - `FlushDNSCache(void)` - Flush local DNS cache
-
-### Memory Management
-
-- Use standard C `free()` to release strings returned by SDK functions (`GetSDKVersion()`, `GetLastErrorMessage()`, `GetDeviceID()`, and string parameters from `GetConsoleConfig()`)
+- `RunPing(int intervalMilliSec)` - Start periodic ping monitoring
+- `StopPing(void)` - Stop ping monitoring
+- `GetLastPingStats(...)` - Get ping statistics
+- `GetConsoleConfig(...)` - Get console configuration
+- `GetDeviceID(void)` - Get device ID
 
 ## C SDK Error Codes
 

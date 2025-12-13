@@ -208,21 +208,30 @@ console.log(`路由器: ${ping.router}ms, 起飞: ${ping.takeoff}ms`);
 
 ### Ping 监控
 
-#### `runPing()`
+#### `runPing(intervalMilliSec)`
 
 启动周期性 ping 监控。
 
-- **返回值：** `number` - 成功返回 0，失败返回负错误码
+- **参数：**
+  - `intervalMilliSec` (number)：Ping 间隔时间（毫秒）。最小值为 100ms。
+- **返回值：** `number` - 成功返回 0，失败返回负错误码：
+  - `-1`：服务器配置无效
+  - `-2`：Ping 已在运行
 
 ```javascript
-lingti.runPing();
+// 每 5 秒 ping 一次
+lingti.runPing(5000);
+
+// 其他示例
+lingti.runPing(1000);  // 每 1 秒 ping 一次
+lingti.runPing(50);    // 将使用 100ms（强制最小值）
 ```
 
 #### `stopPing()`
 
 停止周期性 ping 监控。
 
-- **返回值：** `number` - 成功返回 0，失败返回负错误码
+- **返回值：** `number` - 成功返回 0，ping 未运行时返回 `-1`
 
 ```javascript
 lingti.stopPing();
@@ -560,10 +569,11 @@ encrypted_config 是一个 Base64 编码的字符串，包含所有必要的隧�
 - `GetSDKVersion(void)` - 获取 SDK 版本字符串
 - `GetLastErrorMessage(void)` - 获取最后一次错误消息
 - `FlushDNSCache(void)` - 刷新本地 DNS 缓存
-
-### 内存管理
-
-- 使用标准 C 的 `free()` 释放 SDK 函数返回的字符串（`GetSDKVersion()`、`GetLastErrorMessage()`、`GetDeviceID()` 以及 `GetConsoleConfig()` 的字符串参数）
+- `RunPing(int intervalMilliSec)` - 启动周期性 ping 监控
+- `StopPing(void)` - 停止 ping 监控
+- `GetLastPingStats(...)` - 获取 ping 统计信息
+- `GetConsoleConfig(...)` - 获取控制台配置
+- `GetDeviceID(void)` - 获取设备 ID
 
 ## C SDK 错误码
 

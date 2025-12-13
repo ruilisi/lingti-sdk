@@ -314,20 +314,24 @@ setTimeout(() => {
 
 ## Ping 操作
 
-### `runPing()`
+### `runPing(intervalMilliSec)`
 
 启动到网络节点的周期性 ping 监控。
 
+**参数：**
+- `intervalMilliSec` (number) - Ping 间隔时间（毫秒）。最小值为 100ms。小于 100 的值将被限制为 100ms。
+
 **返回值：** `number`
 - `0` - 成功
-- 负值 - 错误码
+- `-1` - 服务器配置无效
+- `-2` - Ping 已在运行
 
 **示例：**
 ```javascript
-// 启动 ping 监控
-const result = lingti.runPing();
+// 每 5 秒启动一次 ping 监控
+const result = lingti.runPing(5000);
 if (result === 0) {
-    // 每 5 秒监控一次 ping
+    // 监控 ping 更新
     const interval = setInterval(() => {
         const ping = lingti.getLastPingStats();
         updateUI(ping);
@@ -339,12 +343,16 @@ if (result === 0) {
         lingti.stopPing();
     }, 60000);
 }
+
+// 其他示例
+lingti.runPing(1000);  // 每 1 秒 ping 一次
+lingti.runPing(50);    // 将使用 100ms（强制最小值）
 ```
 
 **注意：**
 - Ping 在后台周期性发送
 - 不会阻塞执行
-- 多次调用 `runPing()` 是安全的（不会重复监控）
+- 一次只能运行一个 ping 会话
 
 ---
 

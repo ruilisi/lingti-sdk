@@ -27,53 +27,35 @@ extern "C" {
 #define LINGTI_ERR_NOT_RUNNING  -1   // Service not running (for Stop)
 
 /**
- * Start the TUN2R service with JSON configuration
+ * Start the TUN2R service with encrypted configuration
  *
- * The configuration must be a valid JSON string containing the game configuration.
- * Example JSON:
- * {
- *   "Mode": "tun_switch",
- *   "Server": "your-server.com:port",
- *   "Token": "your-token",
- *   "LogLevel": "info",
- *   "GameExes": ["game.exe"],
- *   "GameID": "YOUR_GAME"
- * }
- *
- * @param configJSON - JSON string containing configuration
+ * @param encryptedConfigJSON - Base64 encoded encrypted configuration string
  * @return 0 on success, negative error code on failure:
- *         LINGTI_ERR_NULL_CONFIG: Invalid config pointer
- *         LINGTI_ERR_JSON_PARSE: JSON parse error
- *         LINGTI_ERR_ALREADY_RUN: Service already running
+ *         LINGTI_ERR_NULL_CONFIG (-1): Invalid/null config pointer
+ *         LINGTI_ERR_JSON_PARSE (-2): Config decryption or JSON parse error
+ *         LINGTI_ERR_ALREADY_RUN (-3): Service already running
  *
- * Note: This function starts the service asynchronously in a background thread.
+ * Note: Service starts asynchronously in a background thread.
  *       Use IsServiceRunning() to check status.
  */
-int StartTun2R(const char* configJSON);
+int StartTun2R(const char* encryptedConfigJSON);
 
 /**
- * Start the TUN2R service using the default config file
+ * Start the TUN2R service using an encrypted configuration file
  *
- * This function loads configuration from the default config.json file
- * in the executable directory.
- *
- * @param configPath - Path to configuration file (can be NULL for default)
- * @return 0 on success, negative error code on failure
- *
- * Note: This is a convenience function that wraps StartTun2R()
+ * @param configPath - Path to encrypted config file (can be NULL for default "encrypted_config.txt")
+ * @return 0 on success, negative error code on failure:
+ *         LINGTI_ERR_NULL_CONFIG (-1): Invalid/null configuration
+ *         LINGTI_ERR_JSON_PARSE (-2): Config decryption or JSON parse error
+ *         LINGTI_ERR_ALREADY_RUN (-3): Service already running
+ *         LINGTI_ERR_LOAD_CONFIG (-4): Failed to read config file
  */
 int StartTun2RWithConfigFile(const char* configPath);
 
 /**
  * Stop the TUN2R service gracefully
  *
- * This function initiates a graceful shutdown of the service.
- * It will cleanup all resources and restore network settings.
- *
- * @return 0 on success, LINGTI_ERR_NOT_RUNNING if not running
- *
- * Note: The function returns immediately but cleanup continues asynchronously.
- *       Wait a few seconds before terminating your application.
+ * @return 0 on success, LINGTI_ERR_NOT_RUNNING (-1) if service not running
  */
 int StopTun2R(void);
 
@@ -87,9 +69,7 @@ int IsServiceRunning(void);
 /**
  * Get the SDK version string
  *
- * @return Version string
- *
- * Note: Caller must call free() to release the returned string.
+ * @return Version string in semantic versioning format (e.g., "1.5.5")
  */
 char* GetSDKVersion(void);
 
@@ -97,23 +77,16 @@ char* GetSDKVersion(void);
  * Get the last error message
  *
  * @return Error message string, or "No error" if no error occurred
- *
- * Note: Caller must call free() to release the returned string.
  */
 char* GetLastErrorMessage(void);
 
 /**
  * Get current traffic statistics
  *
- * @param txBytes - Pointer to receive total transmitted bytes (can be NULL)
- * @param rxBytes - Pointer to receive total received bytes (can be NULL)
- * @param txPkts - Pointer to receive total transmitted packets (can be NULL)
- * @param rxPkts - Pointer to receive total received packets (can be NULL)
- *
- * Example:
- *   uint64_t tx, rx;
- *   GetTrafficStats(&tx, &rx, NULL, NULL);
- *   printf("TX: %llu bytes, RX: %llu bytes\n", tx, rx);
+ * @param txBytes - Transmitted bytes (can be NULL)
+ * @param rxBytes - Received bytes (can be NULL)
+ * @param txPkts - Transmitted packets (can be NULL)
+ * @param rxPkts - Received packets (can be NULL)
  */
 void GetTrafficStats(unsigned long long* txBytes,
                      unsigned long long* rxBytes,
@@ -123,22 +96,9 @@ void GetTrafficStats(unsigned long long* txBytes,
 /**
  * Get the latest ping statistics
  *
- * Retrieves the most recent ping measurements to various network endpoints.
- *
- * @param router - Pointer to receive ping time to router in milliseconds (can be NULL)
- * @param takeoff - Pointer to receive ping time to takeoff server in milliseconds (can be NULL)
- * @param landing - Pointer to receive ping time to landing server in milliseconds (can be NULL)
- *
- * Example:
- *   long long routerPing, takeoffPing, landingPing;
- *   GetLastPingStats(&routerPing, &takeoffPing, &landingPing);
- *   printf("Router: %lld ms, Takeoff: %lld ms, Landing: %lld ms\n",
- *          routerPing, takeoffPing, landingPing);
- *
- * Notes:
- *   - Router ping is to the local gateway
- *   - Takeoff ping is to the proxy entry server
- *   - Landing ping is to the proxy exit server
+ * @param router - Ping to router in milliseconds (can be NULL)
+ * @param takeoff - Ping to takeoff server in milliseconds (can be NULL)
+ * @param landing - Ping to landing server in milliseconds (can be NULL)
  */
 void GetLastPingStats(long long* router,
                       long long* takeoff,
@@ -147,53 +107,23 @@ void GetLastPingStats(long long* router,
 /**
  * Start periodic ping monitoring
  *
- * Starts a background thread that periodically pings the server and measures latency.
- * Ping statistics can be retrieved using GetLastPingStats().
- *
  * @param intervalMilliSec - Ping interval in milliseconds. Minimum value is 100ms.
  *                           Values less than 100 will be clamped to 100ms.
  * @return 0 on success, negative error code on failure:
  *         -1: Invalid server configuration
  *         -2: Ping is already running
- *
- * Example:
- *   int result = RunPing(5000);  // Ping every 5 seconds
- *   if (result == 0) {
- *       printf("Ping monitoring started\n");
- *   }
- *   RunPing(1000);  // Ping every 1 second
- *   RunPing(50);    // Will use 100ms (minimum enforced)
- *
- * Notes:
- *   - Runs in background thread
- *   - Call StopPing() to stop monitoring
- *   - Only one ping session can run at a time
  */
 int RunPing(int intervalMilliSec);
 
 /**
  * Stop periodic ping monitoring
  *
- * Stops the background ping monitoring thread started by RunPing().
- *
- * @return 0 on success, negative error code on failure:
- *         -1: Ping is not running
- *
- * Example:
- *   if (StopPing() == 0) {
- *       printf("Ping monitoring stopped\n");
- *   }
- *
- * Notes:
- *   - Safe to call even if already stopped
- *   - Thread stops gracefully
+ * @return 0 on success, -1 if ping is not running
  */
 int StopPing(void);
 
 /**
  * Flush the DNS cache
- *
- * This function flushes the local DNS cache to force fresh DNS lookups.
  *
  * @return 0 on success
  */
@@ -202,47 +132,22 @@ int FlushDNSCache(void);
 /**
  * Get console configuration parameters
  *
- * Retrieves the console mode network configuration including gateway, subnet mask, IP, and DNS.
- *
- * @param gateway - Pointer to receive gateway address string (can be NULL)
- * @param mask - Pointer to receive subnet mask string (can be NULL)
- * @param ip - Pointer to receive console IP address string (can be NULL)
- * @param dns - Pointer to receive DNS server string (can be NULL)
+ * @param gateway - Gateway address string (can be NULL)
+ * @param mask - Subnet mask string (can be NULL)
+ * @param ip - Console IP address string (can be NULL)
+ * @param dns - DNS server string (can be NULL)
  * @return Console IP state:
  *         0 = completed (IP assignment successful)
  *         1 = failed (IP assignment failed)
  *         2 = idle (not started)
  *         3 = in_progress (IP assignment in progress)
- *
- * Example:
- *   char *gateway, *mask, *ip, *dns;
- *   int state = GetConsoleConfig(&gateway, &mask, &ip, &dns);
- *   printf("State: %d, Gateway: %s, Mask: %s, IP: %s, DNS: %s\n",
- *          state, gateway, mask, ip, dns);
- *   free(gateway);
- *   free(mask);
- *   free(ip);
- *   free(dns);
- *
- * Note: Caller must call free() on each returned string to avoid memory leaks.
  */
 int GetConsoleConfig(char** gateway, char** mask, char** ip, char** dns);
 
 /**
  * Get the unique device ID
  *
- * Returns the Windows Machine GUID which uniquely identifies this Windows installation.
- * The Machine GUID is read from the Windows registry at:
- * HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Cryptography\MachineGuid
- *
- * @return Device ID string (Windows Machine GUID)
- *
- * Example:
- *   char* deviceId = GetDeviceID();
- *   printf("Device ID: %s\n", deviceId);
- *   free(deviceId);
- *
- * Note: Caller must call free() to release the returned string.
+ * @return Device ID string
  */
 char* GetDeviceID(void);
 

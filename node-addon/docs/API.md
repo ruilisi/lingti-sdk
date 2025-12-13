@@ -314,20 +314,24 @@ setTimeout(() => {
 
 ## Ping Operations
 
-### `runPing()`
+### `runPing(intervalMilliSec)`
 
 Start periodic ping monitoring to network nodes.
 
+**Parameters:**
+- `intervalMilliSec` (number) - Ping interval in milliseconds. Minimum value is 100ms. Values less than 100 will be clamped to 100ms.
+
 **Returns:** `number`
 - `0` - Success
-- Negative value - Error code
+- `-1` - Invalid server configuration
+- `-2` - Ping is already running
 
 **Example:**
 ```javascript
-// Start ping monitoring
-const result = lingti.runPing();
+// Start ping monitoring every 5 seconds
+const result = lingti.runPing(5000);
 if (result === 0) {
-    // Monitor ping every 5 seconds
+    // Monitor ping updates
     const interval = setInterval(() => {
         const ping = lingti.getLastPingStats();
         updateUI(ping);
@@ -339,12 +343,16 @@ if (result === 0) {
         lingti.stopPing();
     }, 60000);
 }
+
+// Other examples
+lingti.runPing(1000);  // Ping every 1 second
+lingti.runPing(50);    // Will use 100ms (minimum enforced)
 ```
 
 **Notes:**
 - Pings are sent periodically in the background
 - Does not block execution
-- Multiple calls to `runPing()` are safe (no duplicate monitoring)
+- Only one ping session can run at a time
 
 ---
 
