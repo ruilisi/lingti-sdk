@@ -64,10 +64,10 @@ setTimeout(() => {
     console.log('7. Service running:', lingti.isServiceRunning());
     console.log('8. Traffic stats:', lingti.getTrafficStats());
 
-    // 8. Start ping monitoring
+    // 8. Start ping monitoring (5 second interval)
     console.log('\n=== Testing Ping ===');
-    const pingResult = lingti.runPing();
-    console.log('9. Start ping result:', pingResult);
+    const pingResult = lingti.runPing(5000);
+    console.log('9. Start ping result (5s interval):', pingResult);
 
     setTimeout(() => {
         console.log('10. Ping stats (after 3s):', lingti.getLastPingStats());

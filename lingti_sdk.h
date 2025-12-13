@@ -4,7 +4,7 @@
  * This SDK provides network tunneling capabilities for game traffic routing.
  *
  * Copyright (c) 2025 Ruilisi
- * Version: 1.5.3
+ * Version: 1.5.5
  */
 
 #ifndef LINGTI_SDK_H
@@ -150,23 +150,26 @@ void GetLastPingStats(long long* router,
  * Starts a background thread that periodically pings the server and measures latency.
  * Ping statistics can be retrieved using GetLastPingStats().
  *
+ * @param intervalMilliSec - Ping interval in milliseconds. Minimum value is 100ms.
+ *                           Values less than 100 will be clamped to 100ms.
  * @return 0 on success, negative error code on failure:
- *         -1: Invalid server pointer (NULL)
+ *         -1: Invalid server configuration
  *         -2: Ping is already running
  *
  * Example:
- *   int result = RunPing();
+ *   int result = RunPing(5000);  // Ping every 5 seconds
  *   if (result == 0) {
  *       printf("Ping monitoring started\n");
  *   }
+ *   RunPing(1000);  // Ping every 1 second
+ *   RunPing(50);    // Will use 100ms (minimum enforced)
  *
  * Notes:
  *   - Runs in background thread
- *   - Pings every 5 seconds by default
  *   - Call StopPing() to stop monitoring
  *   - Only one ping session can run at a time
  */
-int RunPing();
+int RunPing(int intervalMilliSec);
 
 /**
  * Stop periodic ping monitoring

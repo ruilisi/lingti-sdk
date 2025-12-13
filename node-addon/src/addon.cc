@@ -112,7 +112,13 @@ Napi::Value GetLastPingStats_Wrapper(const Napi::CallbackInfo& info) {
 Napi::Value RunPing_Wrapper(const Napi::CallbackInfo& info) {
     Napi::Env env = info.Env();
 
-    int result = RunPing();
+    if (info.Length() < 1 || !info[0].IsNumber()) {
+        Napi::TypeError::New(env, "Number expected for intervalMilliSec").ThrowAsJavaScriptException();
+        return env.Null();
+    }
+
+    int intervalMilliSec = info[0].As<Napi::Number>().Int32Value();
+    int result = RunPing(intervalMilliSec);
 
     return Napi::Number::New(env, result);
 }
