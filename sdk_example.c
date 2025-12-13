@@ -56,11 +56,12 @@ int main() {
         printf("Service status: RUNNING\n\n");
     }
 
-    int result2 = RunPing();
+    // Start ping monitoring with 5 second interval (5000ms)
+    int result2 = RunPing(5000);
     if (result2 == 0) {
-        printf("Ping monitoring started\n");
+        printf("Ping monitoring started (5s interval)\n");
     } else {
-        printf("Failed to start ping (code %d)\n", result);
+        printf("Failed to start ping (code %d)\n", result2);
     }
 
     // Monitor traffic for 3600 seconds

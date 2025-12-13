@@ -100,10 +100,24 @@ export function getTrafficStats(): TrafficStats;
 export function getLastPingStats(): PingStats;
 
 /**
- * Start periodic ping monitoring
+ * Start periodic ping monitoring at the specified interval
+ * @param intervalMilliSec - Ping interval in milliseconds. Minimum value is 100ms.
+ *                           Values less than 100 will be clamped to 100ms.
  * @returns 0 on success, negative error code on failure
+ *
+ * @example
+ * // Ping every 5 seconds
+ * runPing(5000);
+ *
+ * @example
+ * // Ping every 1 second
+ * runPing(1000);
+ *
+ * @example
+ * // Ping every 100ms (minimum enforced)
+ * runPing(50);  // Will use 100ms interval
  */
-export function runPing(): number;
+export function runPing(intervalMilliSec: number): number;
 
 /**
  * Stop periodic ping monitoring

@@ -289,4 +289,4 @@ Copyright (c) 2025 Ruilisi
 
 ## Version
 
-Current version: 1.5.3
+Current version: 1.5.4
