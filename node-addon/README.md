@@ -350,7 +350,7 @@ Proprietary - Copyright (c) 2025 Ruilisi
 
 ## Version
 
-SDK Version: 1.5.6
+SDK Version: 1.5.7
 
 ---
 
