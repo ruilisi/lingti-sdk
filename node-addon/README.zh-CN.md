@@ -159,7 +159,7 @@ const running = lingti.isServiceRunning();
 
 获取 SDK 版本字符串。
 
-- **返回值：** `string` - 版本号（例如："1.5.7"）
+- **返回值：** `string` - 版本号（例如："1.6.0"）
 
 ```javascript
 const version = lingti.getSDKVersion();
@@ -350,7 +350,7 @@ npm run build
 
 ## 版本
 
-SDK 版本：1.5.7
+SDK 版本：1.6.0
 
 ---
 

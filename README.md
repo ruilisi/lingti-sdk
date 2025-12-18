@@ -325,7 +325,7 @@ Copyright (c) 2025 Ruilisi
 
 ## Version
 
-Current version: 1.4.3
+`1.6.0`(latest): largely improves traffic stability and reduces packet loss.
 
 ## Demo Video
 
