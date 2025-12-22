@@ -13,3 +13,4 @@ StopPing
 FlushDNSCache
 GetConsoleConfig
 GetDeviceID
+SetLogLevel

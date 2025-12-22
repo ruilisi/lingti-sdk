@@ -250,6 +250,34 @@ int GetConsoleConfig(char** gateway, char** mask, char** ip, char** dns);
  */
 char* GetDeviceID(void);
 
+/**
+ * Set the log level for the service
+ *
+ * Changes the logging verbosity level at runtime. Only accepts three predefined levels.
+ *
+ * @param level - Log level string, must be one of:
+ *                "info" - Show informational messages and above
+ *                "verbose" - Show verbose debug messages and above
+ *                "very-verbose" - Show very detailed debug messages
+ * @return 0 on success, negative error code on failure:
+ *         -1: Invalid log level (null pointer or unsupported level)
+ *
+ * Example:
+ *   if (SetLogLevel("verbose") == 0) {
+ *       printf("Log level set to verbose\n");
+ *   }
+ *
+ *   if (SetLogLevel("info") == 0) {
+ *       printf("Log level set to info\n");
+ *   }
+ *
+ * Notes:
+ *   - Can be called at any time, even while service is running
+ *   - Invalid levels will return -1 and error message can be retrieved via GetLastErrorMessage()
+ *   - Only accepts: "info", "verbose", "very-verbose"
+ */
+int SetLogLevel(const char* level);
+
 #ifdef __cplusplus
 }
 #endif

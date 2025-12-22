@@ -51,6 +51,11 @@ int main() {
 
     printf("Service started successfully!\n\n");
 
+    // Set log level to info to see log.I() messages
+    if (SetLogLevel("info") == 0) {
+        printf("Log level set to info\n");
+    }
+
     // Check service status
     if (IsServiceRunning()) {
         printf("Service status: RUNNING\n\n");
