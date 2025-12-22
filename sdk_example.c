@@ -71,11 +71,12 @@ int main() {
     for (int i = 0; i < 3600; i++) {
         unsigned long long txBytes, rxBytes;
         int64_t router, takeoff, landing;
+        double udpLoss;
         GetTrafficStats(&txBytes, &rxBytes, NULL, NULL);
-        GetLastPingStats(&router, &takeoff, &landing);
+        GetLastPingStats(&router, &takeoff, &landing, &udpLoss);
 
-        printf("\r[%02d/%02d] router: %lld | takeoff: %lld | landing: %lld\n",
-               i + 1, 3600, router, takeoff, landing);
+        printf("\r[%02d/%02d] router: %lld | takeoff: %lld | landing: %lld | UDP loss: %.2f%%\n",
+               i + 1, 3600, router, takeoff, landing, udpLoss);
         printf("\r[%02d/%02d] TX: %llu bytes | RX: %llu bytes",
                i + 1, 3600, txBytes, rxBytes);
 

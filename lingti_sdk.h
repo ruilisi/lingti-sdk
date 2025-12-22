@@ -4,7 +4,7 @@
  * This SDK provides network tunneling capabilities for game traffic routing.
  *
  * Copyright (c) 2025 Ruilisi
- * Version: 1.6.1
+ * Version: 1.6.2
  */
 
 #ifndef LINGTI_SDK_H
@@ -123,26 +123,30 @@ void GetTrafficStats(unsigned long long* txBytes,
 /**
  * Get the latest ping statistics
  *
- * Retrieves the most recent ping measurements to various network endpoints.
+ * Retrieves the most recent ping measurements to various network endpoints and UDP packet loss rate.
  *
  * @param router - Pointer to receive ping time to router in milliseconds (can be NULL)
  * @param takeoff - Pointer to receive ping time to takeoff server in milliseconds (can be NULL)
  * @param landing - Pointer to receive ping time to landing server in milliseconds (can be NULL)
+ * @param udpLoss - Pointer to receive UDP packet loss rate as a percentage 0-100 (can be NULL)
  *
  * Example:
  *   long long routerPing, takeoffPing, landingPing;
- *   GetLastPingStats(&routerPing, &takeoffPing, &landingPing);
- *   printf("Router: %lld ms, Takeoff: %lld ms, Landing: %lld ms\n",
- *          routerPing, takeoffPing, landingPing);
+ *   double udpLoss;
+ *   GetLastPingStats(&routerPing, &takeoffPing, &landingPing, &udpLoss);
+ *   printf("Router: %lld ms, Takeoff: %lld ms, Landing: %lld ms, UDP Loss: %.2f%%\n",
+ *          routerPing, takeoffPing, landingPing, udpLoss);
  *
  * Notes:
  *   - Router ping is to the local gateway
  *   - Takeoff ping is to the proxy entry server
  *   - Landing ping is to the proxy exit server
+ *   - UDP loss rate is calculated from recent UDP traffic
  */
 void GetLastPingStats(long long* router,
                       long long* takeoff,
-                      long long* landing);
+                      long long* landing,
+                      double* udpLoss);
 
 /**
  * Start periodic ping monitoring
