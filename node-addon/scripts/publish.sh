@@ -89,19 +89,12 @@ else
     echo -e "${RED}Warning: ../lingti_sdk.h not found${NC}"
 fi
 
-# Copy README files from parent directory
-if [ -f "../README.md" ]; then
-    cp ../README.md .
-    echo "✓ Copied README.md"
-else
-    echo -e "${RED}Warning: ../README.md not found${NC}"
-fi
-
-if [ -f "../README.zh-CN.md" ]; then
-    cp ../README.zh-CN.md .
-    echo "✓ Copied README.zh-CN.md"
-else
-    echo -e "${RED}Warning: ../README.zh-CN.md not found${NC}"
+# Prepare README files with transformed links for npm
+echo -e "${GREEN}Step 4.1/$steps: Preparing README files for npm...${NC}"
+node scripts/prepare-npm-readme.js
+if [ $? -ne 0 ]; then
+    echo -e "${RED}Error: Failed to prepare README files${NC}"
+    exit 1
 fi
 
 echo -e "${GREEN}Step 5/$steps: Checking npm authentication...${NC}"
