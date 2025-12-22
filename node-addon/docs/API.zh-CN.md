@@ -12,6 +12,9 @@ Lingti SDK Node.js 原生扩展的完整 API 参考文档。
 - [网络统计](#网络统计)
 - [Ping 操作](#ping-操作)
 - [实用函数](#实用函数)
+  - [setLogLevel()](#setloglevel)
+  - [flushDNSCache()](#flushdnscache)
+  - [getConsoleConfig()](#getconsoleconfig)
 - [常量](#常量)
 - [错误处理](#错误处理)
 
@@ -273,14 +276,15 @@ function formatBytes(bytes) {
 
 ### `getLastPingStats()`
 
-获取到各个网络节点的最新 ping 统计信息。
+获取到各个网络节点的最新 ping 统计信息和 UDP 丢包率。
 
 **返回值：** `object`
 ```javascript
 {
     router: number,   // 到路由器的 ping (ms)
     takeoff: number,  // 到起飞服务器的 ping (ms)
-    landing: number   // 到着陆服务器的 ping (ms)
+    landing: number,  // 到着陆服务器的 ping (ms)
+    udpLoss: number   // UDP 丢包率 (0-100%)
 }
 ```
 
@@ -297,10 +301,14 @@ setTimeout(() => {
     console.log(`  路由器:  ${ping.router}ms`);
     console.log(`  起飞:   ${ping.takeoff}ms`);
     console.log(`  着陆:   ${ping.landing}ms`);
+    console.log(`  UDP 丢包: ${ping.udpLoss.toFixed(2)}%`);
 
     // 检查连接质量
     if (ping.router > 100) {
         console.warn('到路由器的延迟过高');
+    }
+    if (ping.udpLoss > 5) {
+        console.warn('检测到高 UDP 丢包率');
     }
 }, 1000);
 ```
@@ -308,7 +316,8 @@ setTimeout(() => {
 **注意：**
 - 需要先调用 `runPing()`
 - 返回最后记录的值（非实时）
-- 如果 ping 失败或尚不可用，值为 `-1`
+- Ping 值如果失败或尚不可用，值为 `-1`
+- UDP 丢包率为 0 到 100 之间的百分比
 
 ---
 
@@ -377,6 +386,45 @@ console.log('Ping 监控已停止');
 ---
 
 ## 实用函数
+
+### `setLogLevel(level)`
+
+在运行时设置服务的日志级别。
+
+**参数：**
+- `level` (string) - 日志级别，必须是以下之一：
+  - `"info"` - 显示信息消息及以上
+  - `"verbose"` - 显示详细调试消息及以上
+  - `"very-verbose"` - 显示非常详细的调试消息
+
+**返回值：** `number`
+- `0` - 成功
+- `-1` - 无效的日志级别
+
+**示例：**
+```javascript
+// 设置详细日志用于调试
+let result = lingti.setLogLevel('verbose');
+if (result === 0) {
+    console.log('日志级别已设置为 verbose');
+}
+
+// 在生产环境减少日志
+result = lingti.setLogLevel('info');
+if (result === 0) {
+    console.log('日志级别已设置为 info');
+}
+
+// 用于故障排除的最大详细程度
+result = lingti.setLogLevel('very-verbose');
+```
+
+**注意：**
+- 可以在任何时候调用，即使服务正在运行
+- 无效的级别返回 `-1`，错误可通过 `getLastErrorMessage()` 获取
+- 仅接受：`"info"`、`"verbose"`、`"very-verbose"`
+
+---
 
 ### `flushDNSCache()`
 

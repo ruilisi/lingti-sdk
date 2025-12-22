@@ -376,7 +376,10 @@ lingti.startTun2RWithConfigFile('encrypted_config.txt');
 
 ## 版本
 
-* `1.6.1`(最新): 汇报UDP丢包统计。
+* `1.6.2`(最新):
+  -* 添加 SetLogLevel API 用于运行时修改日志级别；
+  - GetLastPingStats 现在返回 UDP 丢包统计。
+* `1.6.1`: 汇报UDP丢包统计。
 * `1.6.0`: 大大提升流量稳定性并降低丢包率。
 
 ## 演示视频

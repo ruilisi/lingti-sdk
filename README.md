@@ -387,7 +387,10 @@ Copyright (c) 2025 Ruilisi
 
 ## Version
 
-* `1.6.1`(latest): reports udp packet loss statistics.
+* `1.6.2`(latest): 
+  - add SetLogLevel API to change log level at runtime; 
+  - GetLastPingStats now returns UDP packet loss statistics.
+* `1.6.1`: reports udp packet loss statistics.
 * `1.6.0`: largely improves traffic stability and reduces packet loss.
 
 ## Demo Video

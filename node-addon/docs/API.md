@@ -12,6 +12,9 @@ Complete API reference for the Lingti SDK Node.js native addon.
 - [Network Statistics](#network-statistics)
 - [Ping Operations](#ping-operations)
 - [Utility Functions](#utility-functions)
+  - [setLogLevel()](#setloglevel)
+  - [flushDNSCache()](#flushdnscache)
+  - [getConsoleConfig()](#getconsoleconfig)
 - [Constants](#constants)
 - [Error Handling](#error-handling)
 
@@ -273,14 +276,15 @@ function formatBytes(bytes) {
 
 ### `getLastPingStats()`
 
-Get the most recent ping statistics to various network nodes.
+Get the most recent ping statistics to various network nodes and UDP packet loss rate.
 
 **Returns:** `object`
 ```javascript
 {
     router: number,   // Ping to router (ms)
     takeoff: number,  // Ping to takeoff server (ms)
-    landing: number   // Ping to landing server (ms)
+    landing: number,  // Ping to landing server (ms)
+    udpLoss: number   // UDP packet loss rate (0-100%)
 }
 ```
 
@@ -297,10 +301,14 @@ setTimeout(() => {
     console.log(`  Router:  ${ping.router}ms`);
     console.log(`  Takeoff: ${ping.takeoff}ms`);
     console.log(`  Landing: ${ping.landing}ms`);
+    console.log(`  UDP Loss: ${ping.udpLoss.toFixed(2)}%`);
 
     // Check connection quality
     if (ping.router > 100) {
         console.warn('High latency to router');
+    }
+    if (ping.udpLoss > 5) {
+        console.warn('High UDP packet loss detected');
     }
 }, 1000);
 ```
@@ -308,7 +316,8 @@ setTimeout(() => {
 **Notes:**
 - Requires `runPing()` to be called first
 - Returns last recorded values (not live)
-- Values are `-1` if ping failed or not yet available
+- Ping values are `-1` if ping failed or not yet available
+- UDP loss is a percentage from 0 to 100
 
 ---
 
@@ -377,6 +386,45 @@ console.log('Ping monitoring stopped');
 ---
 
 ## Utility Functions
+
+### `setLogLevel(level)`
+
+Set the log level for the service at runtime.
+
+**Parameters:**
+- `level` (string) - Log level, must be one of:
+  - `"info"` - Show informational messages and above
+  - `"verbose"` - Show verbose debug messages and above
+  - `"very-verbose"` - Show very detailed debug messages
+
+**Returns:** `number`
+- `0` - Success
+- `-1` - Invalid log level
+
+**Example:**
+```javascript
+// Set to verbose logging for debugging
+let result = lingti.setLogLevel('verbose');
+if (result === 0) {
+    console.log('Log level set to verbose');
+}
+
+// Reduce logging for production
+result = lingti.setLogLevel('info');
+if (result === 0) {
+    console.log('Log level set to info');
+}
+
+// Maximum detail for troubleshooting
+result = lingti.setLogLevel('very-verbose');
+```
+
+**Notes:**
+- Can be called at any time, even while service is running
+- Invalid levels return `-1` and error can be retrieved via `getLastErrorMessage()`
+- Only accepts: `"info"`, `"verbose"`, `"very-verbose"`
+
+---
 
 ### `flushDNSCache()`
 
