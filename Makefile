@@ -54,6 +54,11 @@ CFLAGS = -Wall -O2 -I.
 SDK_LIB = lingti_sdk.lib
 LDFLAGS = $(SDK_LIB)
 
+# GitHub release settings
+GITHUB_REPO = ruilisi/lingti-sdk
+SDK_VERSION = $(shell grep '^ \* Version:' lingti_sdk.h | sed 's/.*Version: //')
+DOWNLOAD_URL = https://github.com/$(GITHUB_REPO)/releases/download/v$(SDK_VERSION)/$(SDK_LIB)
+
 # Directories and files
 OUTPUT_DIR = dist
 EXAMPLE_SRC = sdk_example.c
@@ -62,11 +67,22 @@ DRIVER_FILE = lingtiwfp64.sys
 SDK_DLL = lingti_sdk.dll
 
 # Targets
-.PHONY: all example clean help
+.PHONY: all example clean help check-lib
 
 all: example
 
-example:
+check-lib:
+	@if [ ! -f "$(SDK_LIB)" ]; then \
+		echo "$(SDK_LIB) not found. Downloading version $(SDK_VERSION)..."; \
+		echo "Download URL: $(DOWNLOAD_URL)"; \
+		curl -L -o $(SDK_LIB) $(DOWNLOAD_URL) || \
+		(echo "Failed to download $(SDK_LIB). Please download manually from $(DOWNLOAD_URL)" && exit 1); \
+		echo "Successfully downloaded $(SDK_LIB)"; \
+	else \
+		echo "$(SDK_LIB) found."; \
+	fi
+
+example: check-lib
 	@echo "Building example..."
 	@$(MKDIR) $(OUTPUT_DIR)
 	$(CC) $(CFLAGS) $(EXAMPLE_SRC) $(LDFLAGS) -o $(OUTPUT_DIR)/$(EXAMPLE_BIN)
