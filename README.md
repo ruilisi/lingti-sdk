@@ -114,7 +114,7 @@ When distributing your application, include:
 
 ## Quick Start
 
-### Minimum Code(5 lines) to work
+### Minimum Code (5 lines) to work
 
 ```c
 #include "../lingti_sdk.h"
@@ -239,6 +239,11 @@ Click the image below to open the generator and download your `encrypted_config`
 - `GetSDKVersion(void)` - Get SDK version string
 - `GetLastErrorMessage(void)` - Get last error message
 - `FlushDNSCache(void)` - Flush local DNS cache
+- `RunPing(int intervalMilliSec)` - Start periodic ping monitoring
+- `StopPing(void)` - Stop ping monitoring
+- `GetLastPingStats(...)` - Get ping statistics
+- `GetConsoleConfig(...)` - Get console configuration
+- `GetDeviceID(void)` - Get device ID
 
 ## Error Codes
 
@@ -296,21 +301,78 @@ cl your_app.c lingti_sdk.lib
 x86_64-w64-mingw32-gcc your_app.c lingti_sdk.lib -o your_app.exe
 ```
 
-### Node.js package (lingti-sdk) (Recommended)
+## Node.js Package (lingti-sdk) (Recommended)
 
-- Windows is required to run the native addon; on macOS/Linux the install succeeds but skips the native build.
-- Install from npm:
+Node.js native addon (N-API) for the Lingti SDK, providing network tunneling capabilities for game traffic routing.
+
+### Prerequisites
+
+- **Node.js** >= 16.0.0
+- **For runtime**: Windows OS (the SDK DLL is Windows-only)
+- **For building** (Windows only):
+  - Visual Studio 2019 or later with C++ build tools
+  - Python 3.x
+  - node-gyp (installed automatically as dependency)
+
+### Installation
 
 ```bash
 npm install lingti-sdk
 ```
 
+### Usage
+
 ```javascript
 const lingti = require('lingti-sdk');
-if (lingti.isAddonAvailable()) {
-  lingti.startTun2RWithConfigFile('encrypted_config.txt');
+
+// Check platform compatibility first
+if (!lingti.isAddonAvailable()) {
+    console.log('Platform:', lingti.getPlatform());
+    console.log('This addon requires Windows to run.');
+    process.exit(1);
 }
+
+// Start the service with encrypted config file (base64 encoded text)
+// To obtain encrypted config: visit https://game.lingti.com/sdk
+// Select your game (需要加速的游戏) and tunnel line (线路)
+const result = lingti.startTun2RWithConfigFile('encrypted_config.txt');
+if (result === 0) {
+    console.log('Service started successfully!');
+    console.log('SDK Version:', lingti.getSDKVersion());
+} else {
+    console.error('Failed to start:', lingti.getLastErrorMessage());
+}
+
+// Check if service is running
+if (lingti.isServiceRunning()) {
+    console.log('Service is active');
+}
+
+// Get traffic statistics
+const stats = lingti.getTrafficStats();
+console.log('TX:', stats.txBytes, 'RX:', stats.rxBytes);
+
+// Stop the service when done
+lingti.stopTun2R();
 ```
+
+### TypeScript Support
+
+The addon includes full TypeScript definitions:
+
+```typescript
+import * as lingti from 'lingti-sdk';
+
+// Start service with encrypted config file
+lingti.startTun2RWithConfigFile('encrypted_config.txt');
+```
+
+### Platform Support
+
+- **Windows**: Full support (native DLL)
+- **macOS/Linux**: Package installs but native addon is not built (Windows-only DLL)
+
+**Note:** The package can be installed on any platform, but the native addon will only build and work on Windows. On macOS/Linux, the installation will complete successfully but skip the native build step.
 
 ## Examples
 

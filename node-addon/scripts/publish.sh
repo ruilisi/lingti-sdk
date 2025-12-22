@@ -60,16 +60,14 @@ echo -e "${GREEN}Step 1/$steps: Updating package.json...${NC}"
 # Update version in package.json using sed (macOS compatible)
 sed -i '' "s/\"version\": \".*\"/\"version\": \"${NEW_VERSION}\"/" package.json
 
-echo -e "${GREEN}Step 2/$steps: Updating README files...${NC}"
-# Update version in all README files
-sed -i '' "s/SDK Version: ${CURRENT_VERSION}/SDK Version: ${NEW_VERSION}/g" README.md 2>/dev/null || true
-sed -i '' "s/SDK 版本：${CURRENT_VERSION}/SDK 版本：${NEW_VERSION}/g" README.zh-CN.md 2>/dev/null || true
-sed -i '' "s/Current version: ${CURRENT_VERSION}/Current version: ${NEW_VERSION}/g" SDK-README.md 2>/dev/null || true
-sed -i '' "s/当前版本：${CURRENT_VERSION}/当前版本：${NEW_VERSION}/g" SDK-README.zh-CN.md 2>/dev/null || true
+echo -e "${GREEN}Step 2/$steps: Updating README files in parent directory...${NC}"
+# Update version in all README files in parent directory
+sed -i '' "s/SDK Version: ${CURRENT_VERSION}/SDK Version: ${NEW_VERSION}/g" ../README.md 2>/dev/null || true
+sed -i '' "s/SDK 版本：${CURRENT_VERSION}/SDK 版本：${NEW_VERSION}/g" ../README.zh-CN.md 2>/dev/null || true
 
 # Update example version strings in README files
-sed -i '' "s/\"${CURRENT_VERSION}\"/\"${NEW_VERSION}\"/g" README.md 2>/dev/null || true
-sed -i '' "s/\"${CURRENT_VERSION}\"/\"${NEW_VERSION}\"/g" README.zh-CN.md 2>/dev/null || true
+sed -i '' "s/\"${CURRENT_VERSION}\"/\"${NEW_VERSION}\"/g" ../README.md 2>/dev/null || true
+sed -i '' "s/\"${CURRENT_VERSION}\"/\"${NEW_VERSION}\"/g" ../README.zh-CN.md 2>/dev/null || true
 
 echo -e "${GREEN}Step 3/$steps: Creating git tag...${NC}"
 git tag -a "v${NEW_VERSION}" -m "Release version ${NEW_VERSION}" || echo 0
@@ -89,6 +87,21 @@ if [ -f "../lingti_sdk.h" ]; then
     echo "✓ Copied lingti_sdk.h"
 else
     echo -e "${RED}Warning: ../lingti_sdk.h not found${NC}"
+fi
+
+# Copy README files from parent directory
+if [ -f "../README.md" ]; then
+    cp ../README.md .
+    echo "✓ Copied README.md"
+else
+    echo -e "${RED}Warning: ../README.md not found${NC}"
+fi
+
+if [ -f "../README.zh-CN.md" ]; then
+    cp ../README.zh-CN.md .
+    echo "✓ Copied README.zh-CN.md"
+else
+    echo -e "${RED}Warning: ../README.zh-CN.md not found${NC}"
 fi
 
 echo -e "${GREEN}Step 5/$steps: Checking npm authentication...${NC}"

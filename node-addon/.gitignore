@@ -22,3 +22,7 @@ Thumbs.db
 *.swp
 *.swo
 *~
+
+# README files (copied from root during npm publish)
+README.md
+README.zh-CN.md
