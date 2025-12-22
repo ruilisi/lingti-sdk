@@ -67,7 +67,7 @@ DRIVER_FILE = lingtiwfp64.sys
 SDK_DLL = lingti_sdk.dll
 
 # Targets
-.PHONY: all example clean help check-lib
+.PHONY: all example clean help check-lib delete-latest-release
 
 all: example
 
@@ -106,10 +106,25 @@ ifeq ($(OS),Windows_NT)
 endif
 	$(RMDIR) $(OUTPUT_DIR)
 
+delete-latest-release:
+	@echo "Fetching latest release..."
+	@LATEST_TAG=$$(gh release list --limit 1 --json tagName --jq '.[0].tagName'); \
+	if [ -z "$$LATEST_TAG" ]; then \
+		echo "No releases found."; \
+		exit 1; \
+	fi; \
+	echo "Deleting release $$LATEST_TAG..."; \
+	gh release delete "$$LATEST_TAG" --yes && \
+	echo "Deleting tag $$LATEST_TAG..." && \
+	git push --delete origin "$$LATEST_TAG" && \
+	git tag -d "$$LATEST_TAG" && \
+	echo "Successfully deleted release and tag $$LATEST_TAG"
+
 help:
 	@echo "Lingti SDK Makefile"
 	@echo ""
 	@echo "Targets:"
-	@echo "  make example  - Build example and copy files to example/ directory"
-	@echo "  make clean    - Remove the example/ directory"
-	@echo "  make help     - Show this help message"
+	@echo "  make example               - Build example and copy files to example/ directory"
+	@echo "  make clean                 - Remove the example/ directory"
+	@echo "  make delete-latest-release - Delete the latest GitHub release and tag"
+	@echo "  make help                  - Show this help message"
