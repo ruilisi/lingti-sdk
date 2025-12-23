@@ -376,8 +376,12 @@ lingti.startTun2RWithConfigFile('encrypted_config.txt');
 
 ## 版本
 
-* `1.6.2`(最新):
-  -* 添加 SetLogLevel API 用于运行时修改日志级别；
+* `1.7.0`(最新):
+  - 大大降低了丢包率，UDP包较大的游戏实现0丢包(例如Apex和漫威争锋)
+  - 大大降低了TCP大流量下载时的CPU和内存占用，CPU消耗降至优化前的15%
+  - 大大增强了游戏流量代理的稳定性
+* `1.6.2`:
+  - 添加 SetLogLevel API 用于运行时修改日志级别；
   - GetLastPingStats 现在返回 UDP 丢包统计。
 * `1.6.1`: 汇报UDP丢包统计。
 * `1.6.0`: 大大提升流量稳定性并降低丢包率。

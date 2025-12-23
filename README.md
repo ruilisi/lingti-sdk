@@ -387,8 +387,12 @@ Copyright (c) 2025 Ruilisi
 
 ## Version
 
-* `1.6.2`(latest): 
-  - add SetLogLevel API to change log level at runtime; 
+* `1.7.0` (Latest):
+  - Greatly reduced packet loss rate, achieving zero packet loss for games with large UDP packets (e.g., Apex Legends and Marvel Rivals)
+  - Significantly reduced CPU and memory usage during high-volume TCP downloads, with CPU consumption down to 15% of pre-optimization levels
+  - Greatly enhanced stability of game traffic proxying
+* `1.6.2`:
+  - add SetLogLevel API to change log level at runtime;
   - GetLastPingStats now returns UDP packet loss statistics.
 * `1.6.1`: reports udp packet loss statistics.
 * `1.6.0`: largely improves traffic stability and reduces packet loss.
