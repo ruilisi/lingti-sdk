@@ -57,7 +57,8 @@ LDFLAGS = $(SDK_LIB)
 # GitHub release settings
 GITHUB_REPO = ruilisi/lingti-sdk
 SDK_VERSION = $(shell grep '^ \* Version:' lingti_sdk.h | sed 's/.*Version: //')
-DOWNLOAD_URL = https://github.com/$(GITHUB_REPO)/releases/download/v$(SDK_VERSION)/$(SDK_LIB)
+DOWNLOAD_URL_LIB = https://github.com/$(GITHUB_REPO)/releases/download/v$(SDK_VERSION)/$(SDK_LIB)
+DOWNLOAD_URL_DLL = https://github.com/$(GITHUB_REPO)/releases/download/v$(SDK_VERSION)/$(SDK_DLL)
 
 # Directories and files
 OUTPUT_DIR = dist
@@ -72,17 +73,18 @@ SDK_DLL = lingti_sdk.dll
 all: example
 
 check-lib:
-	@if [ ! -f "$(SDK_LIB)" ]; then \
-		echo "$(SDK_LIB) not found. Downloading version $(SDK_VERSION)..."; \
-		echo "Download URL: $(DOWNLOAD_URL)"; \
-		curl -L -o $(SDK_LIB) $(DOWNLOAD_URL) || \
-		(echo "Failed to download $(SDK_LIB). Please download manually from $(DOWNLOAD_URL)" && exit 1); \
-		echo "Successfully downloaded $(SDK_LIB)"; \
-	else \
-		echo "$(SDK_LIB) found."; \
-	fi
+	@echo "Downloading latest $(SDK_LIB) version $(SDK_VERSION)..."
+	@echo "Download URL: $(DOWNLOAD_URL_LIB)"
+	@curl -L -o $(SDK_LIB) $(DOWNLOAD_URL_LIB) || \
+		(echo "Failed to download $(SDK_LIB). Please download manually from $(DOWNLOAD_URL_LIB)" && exit 1)
+	@echo "Successfully downloaded $(SDK_LIB)"
+	@echo "Downloading latest $(SDK_DLL) version $(SDK_VERSION)..."
+	@echo "Download URL: $(DOWNLOAD_URL_DLL)"
+	@curl -L -o $(SDK_DLL) $(DOWNLOAD_URL_DLL) || \
+		(echo "Failed to download $(SDK_DLL). Please download manually from $(DOWNLOAD_URL_DLL)" && exit 1)
+	@echo "Successfully downloaded $(SDK_DLL)"
 
-example: check-lib
+example:
 	@echo "Building example..."
 	@$(MKDIR) $(OUTPUT_DIR)
 	$(CC) $(CFLAGS) $(EXAMPLE_SRC) $(LDFLAGS) -o $(OUTPUT_DIR)/$(EXAMPLE_BIN)
