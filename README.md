@@ -387,7 +387,9 @@ Copyright (c) 2025 Ruilisi
 
 ## Version
 
-* `1.7.0` (Latest):
+* `1.7.2` (Latest):
+  - Optimized routing strategy, improved game entry stability for Apex Legends, Battlefield 6, and Marvel Rivals
+* `1.7.0`:
   - Greatly reduced packet loss rate, achieving zero packet loss for games with large UDP packets (e.g., Apex Legends and Marvel Rivals)
   - Significantly reduced CPU and memory usage during high-volume TCP downloads, with CPU consumption down to 15% of pre-optimization levels
   - Greatly enhanced stability of game traffic proxying
