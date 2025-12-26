@@ -387,7 +387,9 @@ Copyright (c) 2025 Ruilisi
 
 ## Version
 
-* `1.7.2` (Latest):
+* `1.7.3` (Latest):
+  - Fixed ICMP Ping issues for games like Conqueror's Blade, reduced CPU usage for game proxy
+* `1.7.2`:
   - Optimized routing strategy, improved game entry stability for Apex Legends, Battlefield 6, and Marvel Rivals
 * `1.7.0`:
   - Greatly reduced packet loss rate, achieving zero packet loss for games with large UDP packets (e.g., Apex Legends and Marvel Rivals)
