@@ -387,7 +387,9 @@ Copyright (c) 2025 Ruilisi
 
 ## Version
 
-* `1.7.3` (Latest):
+* `1.8.0` (Latest):
+  - Significantly improved performance for TCP-heavy games like Path of Exile 2, introduced bitmap-based UDP packet loss calculation for more accurate and real-time packet loss monitoring
+* `1.7.3`:
   - Fixed ICMP Ping issues for games like Conqueror's Blade, reduced CPU usage for game proxy
 * `1.7.2`:
   - Optimized routing strategy, improved game entry stability for Apex Legends, Battlefield 6, and Marvel Rivals
