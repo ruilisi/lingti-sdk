@@ -31,7 +31,7 @@ if (!lingti.isAddonAvailable()) {
 console.log('SDK Version:', lingti.getSDKVersion());
 
 // Start tunnel
-// To obtain encrypted_config: visit https://game.lingti.com/sdk
+// To obtain encrypted_config: visit https://ai.lingti.com/sdk
 // Select your game (需要加速的游戏) and tunnel line (线路)
 const result = lingti.startTun2RWithConfigFile('encrypted_config.txt');
 if (result === 0) {
