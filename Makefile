@@ -12,6 +12,7 @@ ifeq ($(OS),Windows_NT)
         RM = del /Q
         RMDIR = rmdir /S /Q
         MKDIR = mkdir
+        MV = move /Y
         CP = copy
         SEP = \\
     else
@@ -20,6 +21,7 @@ ifeq ($(OS),Windows_NT)
         RM = rm -f
         RMDIR = rm -rf
         MKDIR = mkdir -p
+        MV = mv -f
         CP = cp
         SEP = /
     endif
@@ -31,6 +33,7 @@ else
     MKDIR = mkdir -p
     CP = cp
     SEP = /
+    MV = mv -f
 
 endif
 
@@ -73,16 +76,11 @@ SDK_DLL = lingti_sdk.dll
 all: example
 
 check-lib:
-	@echo "Downloading latest $(SDK_LIB) version $(SDK_VERSION)..."
-	@echo "Download URL: $(DOWNLOAD_URL_LIB)"
-	@curl -L -o $(SDK_LIB) $(DOWNLOAD_URL_LIB) || \
-		(echo "Failed to download $(SDK_LIB). Please download manually from $(DOWNLOAD_URL_LIB)" && exit 1)
-	@echo "Successfully downloaded $(SDK_LIB)"
-	@echo "Downloading latest $(SDK_DLL) version $(SDK_VERSION)..."
-	@echo "Download URL: $(DOWNLOAD_URL_DLL)"
-	@curl -L -o $(SDK_DLL) $(DOWNLOAD_URL_DLL) || \
-		(echo "Failed to download $(SDK_DLL). Please download manually from $(DOWNLOAD_URL_DLL)" && exit 1)
-	@echo "Successfully downloaded $(SDK_DLL)"
+	@echo "Downloading SDK $(SDK_VERSION)..."
+	curl -fL -o $(SDK_LIB).tmp $(DOWNLOAD_URL_LIB)
+	curl -fL -o $(SDK_DLL).tmp $(DOWNLOAD_URL_DLL)
+	$(MV) $(SDK_LIB).tmp $(SDK_LIB)
+	$(MV) $(SDK_DLL).tmp $(SDK_DLL)
 
 example:
 	@echo "Building example..."

@@ -376,6 +376,7 @@ lingti.startTun2RWithConfigFile('encrypted_config.txt');
 
 ## 版本
 
+* `2.5.1`（待发布）：Windows SDK 使用 core 2.5.1 重建。npm 发布脚本会先解包，再与 GitHub Release 的 DLL 和导入库逐字节核对。
 * `1.8.0`(最新):
   - 大幅优化《流放之路2》等TCP游戏性能,采用位图算法精准计算UDP丢包率,实现更精确的实时丢包监控
 * `1.7.3`:

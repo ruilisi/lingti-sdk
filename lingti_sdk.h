@@ -4,7 +4,7 @@
  * This SDK provides network tunneling capabilities for game traffic routing.
  *
  * Copyright (c) 2026 Ruilisi
- * Version: 1.8.0
+ * Version: 2.5.1
  */
 
 #ifndef LINGTI_SDK_H

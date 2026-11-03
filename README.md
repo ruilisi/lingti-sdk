@@ -387,6 +387,7 @@ Copyright (c) 2025 Ruilisi
 
 ## Version
 
+* `2.5.1` (unreleased): Windows SDK rebuilt with core 2.5.1. The npm release script checks the packed DLL and import library against the GitHub Release before publishing.
 * `1.8.0` (Latest):
   - Significantly improved performance for TCP-heavy games like Path of Exile 2, introduced bitmap-based UDP packet loss calculation for more accurate and real-time packet loss monitoring
 * `1.7.3`:

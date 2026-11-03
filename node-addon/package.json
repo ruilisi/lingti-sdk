@@ -1,6 +1,6 @@
 {
   "name": "lingti-sdk",
-  "version": "1.8.0",
+  "version": "2.5.1",
   "description": "Node.js native addon for Lingti SDK - Network Tunneling Service",
   "main": "index.js",
   "types": "index.d.ts",
@@ -10,7 +10,8 @@
     "clean": "node-gyp clean",
     "test": "node test.js",
     "prepare:readme": "node scripts/prepare-npm-readme.js",
-    "publish:version": "bash scripts/publish.sh"
+    "publish:version": "bash scripts/publish.sh",
+    "prepack": "node scripts/prepare-package.js && npm run prepare:readme"
   },
   "keywords": [
     "lingti",
