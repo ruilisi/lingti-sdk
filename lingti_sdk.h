@@ -24,6 +24,7 @@ extern "C" {
 #define LINGTI_ERR_JSON_PARSE   -2   // JSON parsing error
 #define LINGTI_ERR_ALREADY_RUN  -3   // Service already running
 #define LINGTI_ERR_LOAD_CONFIG  -4   // Failed to load config file
+#define LINGTI_ERR_REQUIRE_ADMIN -5  // Windows tunnel requires elevation
 #define LINGTI_ERR_NOT_RUNNING  -1   // Service not running (for Stop)
 
 /**
@@ -45,6 +46,7 @@ extern "C" {
  *         LINGTI_ERR_NULL_CONFIG: Invalid config pointer
  *         LINGTI_ERR_JSON_PARSE: JSON parse error
  *         LINGTI_ERR_ALREADY_RUN: Service already running
+ *         LINGTI_ERR_REQUIRE_ADMIN: Real tunnel requires elevation
  *
  * Note: This function starts the service asynchronously in a background thread.
  *       Use IsServiceRunning() to check status.

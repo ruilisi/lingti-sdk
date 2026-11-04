@@ -32,9 +32,10 @@ Napi::Value StartTun2R_Wrapper(const Napi::CallbackInfo& info) {
 Napi::Value StartTun2RWithConfigFile_Wrapper(const Napi::CallbackInfo& info) {
     Napi::Env env = info.Env();
 
+    std::string path;
     const char* configPath = nullptr;
     if (info.Length() > 0 && info[0].IsString()) {
-        std::string path = info[0].As<Napi::String>().Utf8Value();
+        path = info[0].As<Napi::String>().Utf8Value();
         configPath = path.c_str();
     }
 
@@ -98,7 +99,7 @@ Napi::Value GetLastPingStats_Wrapper(const Napi::CallbackInfo& info) {
     Napi::Env env = info.Env();
 
     long long router = 0, takeoff = 0, landing = 0;
-    GetLastPingStats(&router, &takeoff, &landing);
+    GetLastPingStats(&router, &takeoff, &landing, nullptr);
 
     Napi::Object result = Napi::Object::New(env);
     result.Set("router", Napi::Number::New(env, static_cast<double>(router)));
@@ -184,6 +185,7 @@ Napi::Object GetErrorCodes(Napi::Env env) {
     codes.Set("ERR_JSON_PARSE", Napi::Number::New(env, LINGTI_ERR_JSON_PARSE));
     codes.Set("ERR_ALREADY_RUN", Napi::Number::New(env, LINGTI_ERR_ALREADY_RUN));
     codes.Set("ERR_LOAD_CONFIG", Napi::Number::New(env, LINGTI_ERR_LOAD_CONFIG));
+    codes.Set("ERR_REQUIRE_ADMIN", Napi::Number::New(env, LINGTI_ERR_REQUIRE_ADMIN));
     codes.Set("ERR_NOT_RUNNING", Napi::Number::New(env, LINGTI_ERR_NOT_RUNNING));
     return codes;
 }

@@ -40,6 +40,7 @@ const ErrorCodes = addon ? addon.ErrorCodes : {
     ERR_JSON_PARSE: -2,
     ERR_ALREADY_RUN: -3,
     ERR_LOAD_CONFIG: -4,
+    ERR_REQUIRE_ADMIN: -5,
     ERR_NOT_RUNNING: -1
 };
 

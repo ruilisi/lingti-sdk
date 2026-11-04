@@ -39,6 +39,7 @@ export enum ErrorCode {
     ERR_JSON_PARSE = -2,
     ERR_ALREADY_RUN = -3,
     ERR_LOAD_CONFIG = -4,
+    ERR_REQUIRE_ADMIN = -5,
     ERR_NOT_RUNNING = -1
 }
 
@@ -146,6 +147,7 @@ export const ErrorCodes: {
     ERR_JSON_PARSE: number;
     ERR_ALREADY_RUN: number;
     ERR_LOAD_CONFIG: number;
+    ERR_REQUIRE_ADMIN: number;
     ERR_NOT_RUNNING: number;
 };
 

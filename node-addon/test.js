@@ -24,6 +24,15 @@ if (!lingti.isAddonAvailable()) {
 
 console.log('\n=== Running Full Test Suite ===\n');
 
+// A heap-backed UTF-8 path must survive the handoff from the addon to the DLL.
+const assert = require('node:assert/strict');
+const path = require('node:path');
+const { randomUUID } = require('node:crypto');
+const missing = path.join(require('node:os').tmpdir(), '不存在-' + randomUUID(), 'config.txt');
+assert.equal(lingti.startTun2RWithConfigFile(missing), lingti.ErrorCodes.ERR_LOAD_CONFIG);
+assert.ok(lingti.getLastErrorMessage().includes(missing));
+
+
 // 1. Get SDK version
 console.log('1. SDK Version:', lingti.getSDKVersion());
 
