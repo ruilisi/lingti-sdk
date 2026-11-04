@@ -58,11 +58,11 @@ Lingti SDK 使用**加密配置**以增强安全性。所有配置数据均经�
 
 ### 从 Lingti SDK 门户获取
 
-配置必须从 Lingti SDK 门户 **https://ai.lingti.com/sdk** 获取。
+配置必须从 Lingti SDK 门户 **https://game.lingti.com/sdk** 获取。
 
 **如何获取您的 encrypted_config：**
 
-1. 访问 https://ai.lingti.com/sdk
+1. 访问 https://game.lingti.com/sdk
 2. 从下拉列表中选择您的游戏（需要加速的游戏）
 3. 选择您首选的隧道线路（线路）
 4. 复制生成的 `encrypted_config` 字符串
@@ -72,7 +72,7 @@ encrypted_config 是一个 Base64 编码的字符串，包含所有必要的隧�
 ### 使用示例
 
 ```javascript
-// 从 https://ai.lingti.com/sdk 获取 encrypted_config 后
+// 从 https://game.lingti.com/sdk 获取 encrypted_config 后
 const encryptedConfig = "SGVsbG8gV29ybGQhVGhpcyBpcyBhbiBlbmNyeXB0ZWQgY29uZmlndXJhdGlvbg==";
 
 // 直接使用

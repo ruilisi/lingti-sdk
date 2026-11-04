@@ -5,7 +5,7 @@ English | [简体中文](README.zh-CN.md)
 A lightweight C SDK for game traffic tunneling and network acceleration with real-time traffic monitoring.
 
 <p align="center">
-  <a href="https://ai.lingti.com" style="text-decoration:none">
+  <a href="https://game.lingti.com" style="text-decoration:none">
     <img src="docs/assets/lingti-homepage.png" alt="Lingti homepage" width="100%" style="border-radius:14px;" />
     <br /><em>Click to open the Lingti accelerator homepage</em>
   </a>
@@ -209,7 +209,7 @@ The SDK **only** supports encrypted configuration for enhanced security.
 
 To obtain an encrypted configuration:
 
-1. Visit https://ai.lingti.com/sdk
+1. Visit https://game.lingti.com/sdk
 2. Select your game (需要加速的游戏)
 3. Select your tunnel line (线路)
 4. Copy the provided encrypted_config string
@@ -219,7 +219,7 @@ The encrypted_config is a Base64-encoded string that contains all necessary tunn
 Click the image below to open the generator and download your `encrypted_config` file:
 
 <p align="center">
-  <a href="https://ai.lingti.com/sdk" style="text-decoration:none">
+  <a href="https://game.lingti.com/sdk" style="text-decoration:none">
     <img src="docs/assets/lingti-sdk.png" alt="Generate encrypted_config" width="80%" style="border-radius:14px;" />
     <br /><em>Click the image to open the encrypted_config generator</em>
   </a>
@@ -333,7 +333,7 @@ if (!lingti.isAddonAvailable()) {
 }
 
 // Start the service with encrypted config file (base64 encoded text)
-// To obtain encrypted config: visit https://ai.lingti.com/sdk
+// To obtain encrypted config: visit https://game.lingti.com/sdk
 // Select your game (需要加速的游戏) and tunnel line (线路)
 const result = lingti.startTun2RWithConfigFile('encrypted_config.txt');
 if (result === 0) {
@@ -416,7 +416,7 @@ Copyright (c) 2025 Ruilisi
 ## Contact Us
 
 <p align="center">
-  <a href="https://ai.lingti.com/contact_us" style="text-decoration:none">
+  <a href="https://game.lingti.com/contact_us" style="text-decoration:none">
     <img src="docs/assets/wechat-qr.png" alt="Contact Lingti" width="180" style="border-radius:14px;" />
     <br /><em>Scan or click to reach the Lingti team</em>
   </a>

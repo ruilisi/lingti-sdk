@@ -5,7 +5,7 @@
 轻量级 C SDK，用于游戏流量隧道和网络加速，支持实时流量监控。
 
 <p align="center">
-  <a href="https://ai.lingti.com" style="text-decoration:none">
+  <a href="https://game.lingti.com" style="text-decoration:none">
     <img src="docs/assets/lingti-homepage.png" alt="灵缇官网" width="100%" style="border-radius:14px;" />
     <br /><em>点击进入灵缇加速器官网</em>
   </a>
@@ -198,7 +198,7 @@ int main() {
 SDK **仅**支持加密配置以增强安全性。
 
 获取加密配置的步骤：
-1. 访问 https://ai.lingti.com/sdk
+1. 访问 https://game.lingti.com/sdk
 2. 选择您的游戏（需要加速的游戏）
 3. 选择您的隧道线路（线路）
 4. 复制生成的 encrypted_config 字符串
@@ -208,7 +208,7 @@ encrypted_config 是一个 Base64 编码的字符串，包含所有必要的隧�
 点击下方图片打开生成页并下载配置：
 
 <p align="center">
-  <a href="https://ai.lingti.com/sdk" style="text-decoration:none">
+  <a href="https://game.lingti.com/sdk" style="text-decoration:none">
     <img src="docs/assets/lingti-sdk.png" alt="生成 encrypted_config" width="80%" style="border-radius:14px;" />
     <br /><em>点击进入 encrypted_config 生成页</em>
   </a>
@@ -322,7 +322,7 @@ if (!lingti.isAddonAvailable()) {
 }
 
 // 使用加密配置文件启动服务（base64 编码文本）
-// 获取加密配置：访问 https://ai.lingti.com/sdk
+// 获取加密配置：访问 https://game.lingti.com/sdk
 // 选择您的游戏（需要加速的游戏）和隧道线路（线路）
 const result = lingti.startTun2RWithConfigFile('encrypted_config.txt');
 if (result === 0) {
@@ -405,7 +405,7 @@ lingti.startTun2RWithConfigFile('encrypted_config.txt');
 ## 联系我们
 
 <p align="center">
-  <a href="https://ai.lingti.com/contact_us" style="text-decoration:none">
+  <a href="https://game.lingti.com/contact_us" style="text-decoration:none">
     <img src="docs/assets/wechat-qr.png" alt="联系灵缇" width="180" style="border-radius:14px;" />
     <br /><em>扫码或点击联系灵缇团队</em>
   </a>

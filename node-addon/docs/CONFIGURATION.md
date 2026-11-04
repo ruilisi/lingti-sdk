@@ -58,11 +58,11 @@ The encryption ensures that sensitive data cannot be read or modified without pr
 
 ### From Lingti SDK Portal
 
-Configuration must be obtained from the Lingti SDK portal at **https://ai.lingti.com/sdk**.
+Configuration must be obtained from the Lingti SDK portal at **https://game.lingti.com/sdk**.
 
 **How to get your encrypted_config:**
 
-1. Visit https://ai.lingti.com/sdk
+1. Visit https://game.lingti.com/sdk
 2. Select your game (需要加速的游戏) from the dropdown
 3. Select your preferred tunnel line (线路)
 4. Copy the generated `encrypted_config` string
@@ -72,7 +72,7 @@ The encrypted_config is a Base64-encoded string that contains all necessary tunn
 ### Example Usage
 
 ```javascript
-// After obtaining encrypted_config from https://ai.lingti.com/sdk
+// After obtaining encrypted_config from https://game.lingti.com/sdk
 const encryptedConfig = "SGVsbG8gV29ybGQhVGhpcyBpcyBhbiBlbmNyeXB0ZWQgY29uZmlndXJhdGlvbg==";
 
 // Use it directly
