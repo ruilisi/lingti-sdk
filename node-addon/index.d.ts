@@ -162,3 +162,31 @@ export function isAddonAvailable(): boolean;
  * @returns Platform string (e.g., 'win32', 'darwin', 'linux')
  */
 export function getPlatform(): string;
+
+export interface DiagnosticsConfig {
+    user_id: string;
+    token?: string;
+    directory?: string;
+    api_base?: string;
+    device_id?: string;
+    app_version?: string;
+    requested_level?: 'basic' | 'debug' | 'trace';
+}
+export interface DiagnosticRecord {
+    id: string;
+    state: 'recording' | 'local' | 'pending' | 'uploading' | 'retry' | 'uploaded';
+    started_at: string;
+    ended_at: string;
+    uploaded_at?: string;
+    raw_bytes: number;
+    truncated: boolean;
+    last_error: string;
+}
+export interface DiagnosticUpload { id: string; state: string; }
+export function configureDiagnostics(config: DiagnosticsConfig): Promise<void>;
+export function listDiagnosticRecords(): Promise<DiagnosticRecord[]>;
+export function uploadDiagnosticRecord(id: string): Promise<DiagnosticUpload>;
+export function getDiagnosticUploadStatus(id: string): Promise<DiagnosticRecord>;
+export function getDiagnosticUploadStatus(id?: undefined): Promise<{busy: boolean; last_error: string}>;
+export function retryDiagnosticUploads(): Promise<DiagnosticUpload>;
+export function deleteDiagnosticRecord(id: string): Promise<void>;

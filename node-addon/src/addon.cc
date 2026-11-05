@@ -190,8 +190,35 @@ Napi::Object GetErrorCodes(Napi::Env env) {
     return codes;
 }
 
+class DiagnosticsWorker : public Napi::AsyncWorker {
+ public:
+  DiagnosticsWorker(Napi::Env env, std::string request)
+      : Napi::AsyncWorker(env), deferred(Napi::Promise::Deferred::New(env)), request(std::move(request)) {}
+  Napi::Promise Promise() { return deferred.Promise(); }
+  void Execute() override {
+    char* result = DiagnosticsCommand(request.c_str());
+    if (!result) { SetError("diagnostics_unavailable"); return; }
+    response.assign(result);
+    FreeDiagnosticString(result);
+  }
+  void OnOK() override { deferred.Resolve(Napi::String::New(Env(), response)); }
+  void OnError(const Napi::Error& error) override { deferred.Reject(error.Value()); }
+ private:
+  Napi::Promise::Deferred deferred;
+  std::string request, response;
+};
+Napi::Value DiagnosticsWrapper(const Napi::CallbackInfo& info) {
+  if (info.Length() != 1 || !info[0].IsString()) {
+    Napi::TypeError::New(info.Env(), "Expected JSON request").ThrowAsJavaScriptException();
+    return info.Env().Undefined();
+  }
+  auto* worker = new DiagnosticsWorker(info.Env(), info[0].As<Napi::String>().Utf8Value());
+  auto promise = worker->Promise(); worker->Queue(); return promise;
+}
+
 // Initialize the addon
 Napi::Object Init(Napi::Env env, Napi::Object exports) {
+    exports.Set("diagnosticsCommand", Napi::Function::New(env, DiagnosticsWrapper));
     // Export all functions
     exports.Set("startTun2R", Napi::Function::New(env, StartTun2R_Wrapper));
     exports.Set("startTun2RWithConfigFile", Napi::Function::New(env, StartTun2RWithConfigFile_Wrapper));

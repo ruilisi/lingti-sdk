@@ -280,6 +280,21 @@ char* GetDeviceID(void);
  */
 int SetLogLevel(const char* level);
 
+/* UTF-8 JSON request/response. Actions: configure, list, upload, status,
+ * flush, delete. Caller must free every returned string with FreeDiagnosticString.
+ * Run on a worker thread (configure and snapshot may perform file/network I/O).
+ * upload/flush schedule bounded background work; poll status/list for completion.
+ */
+char* DiagnosticsCommand(const char* request);
+/* All functions return {ok,data,error?}; free results with FreeDiagnosticString. */
+char* ConfigureDiagnostics(const char* configJSON);
+char* ListDiagnosticRecords(void);
+char* UploadDiagnosticRecord(const char* id);
+char* GetDiagnosticUploadStatus(const char* id);
+char* RetryDiagnosticUploads(void);
+char* DeleteDiagnosticRecord(const char* id);
+void FreeDiagnosticString(char* value);
+
 #ifdef __cplusplus
 }
 #endif

@@ -39,6 +39,7 @@
     "index.d.ts",
     "binding.gyp",
     "src/",
+    "docs/DIAGNOSTICS.zh-CN.md",
     "scripts/",
     "lingti_sdk.dll",
     "lingti_sdk.lib",

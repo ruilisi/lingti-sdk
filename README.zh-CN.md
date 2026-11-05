@@ -410,3 +410,7 @@ lingti.startTun2RWithConfigFile('encrypted_config.txt');
     <br /><em>扫码或点击联系灵缇团队</em>
   </a>
 </p>
+
+## SDK diagnostics
+
+日志初始化、异步上传、重试与 DLL 内存管理见 [诊断接入文档](node-addon/docs/DIAGNOSTICS.zh-CN.md)。

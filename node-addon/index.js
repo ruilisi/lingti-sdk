@@ -183,7 +183,20 @@ const ConsoleIPState = {
     IN_PROGRESS: 3
 };
 
+async function diagnostics(action, extra = {}) {
+    ensureAddon();
+    const response = JSON.parse(await addon.diagnosticsCommand(JSON.stringify({action, ...extra})));
+    if (!response.ok) throw new Error(response.error || 'diagnostics_failed');
+    return response.data;
+}
+
 module.exports = {
+    configureDiagnostics: config => diagnostics('configure', {config}),
+    listDiagnosticRecords: () => diagnostics('list'),
+    uploadDiagnosticRecord: id => diagnostics('upload', {id}),
+    getDiagnosticUploadStatus: id => diagnostics('status', {id}),
+    retryDiagnosticUploads: () => diagnostics('flush'),
+    deleteDiagnosticRecord: id => diagnostics('delete', {id}),
     // Core functions
     startTun2R,
     startTun2RWithConfigFile,
